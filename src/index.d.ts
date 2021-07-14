@@ -27,7 +27,6 @@ export * from './types/SearchBar';
 export * from './types/Text';
 export * from './types/RadioItem';
 export * from './types/RadioButton';
-export * from './types/Flex';
 
 export let theme:themeType;
 export let colors:colorsType;

@@ -5,9 +5,9 @@ import { action } from '@storybook/addon-actions';
 import Stack from '../Layout/Stack';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MenuAddButton from './MenuAddButton';
-import ExampleMenuButton from './MenuAddButton.example.js';
+import ExampleMenuButton from './MenuAddButton.example';
 
-<Meta title="MenuAddButton" component={MenuAddButton} />
+<Meta title="Design System|MenuAddButton" component={MenuAddButton} />
 
 # MenuAddButton
 A `MenuAddButton` is a clickable button to carry out actions like adding and removing items from cart.
@@ -17,8 +17,8 @@ A `MenuAddButton` is a clickable button to carry out actions like adding and rem
 import { MenuAddButton } from 'react-native-design-system';
 
 <MenuAddButton
-  onIncrement={() => handleIncrement()}
-  onDecrement={() => handleDecrement()}
+  onIncrement={() => handleIncrement())}
+  onDecrement={() => handleDecrement())}
   count={this.state.count}
 />
 ```
