@@ -4,7 +4,6 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-// import { useThemeContext } from '../util/ThemeProvider';
 
 type TButtonProps = {
   children?: string;
@@ -16,8 +15,6 @@ type TButtonProps = {
 };
 
 const Button: React.FunctionComponent<TButtonProps> = props => {
-  // const theme = useThemeContext();
-
   const styles = StyleSheet.create({
     buttonText: {
       fontSize: 14,
