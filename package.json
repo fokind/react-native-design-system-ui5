@@ -2,9 +2,9 @@
   "name": "fundamental-react-native",
   "version": "0.0.1",
   "description": "A set of React Native components like Fundamental React",
-  "main": "src/index.js",
+  "main": "src/index.ts",
   "scripts": {
-    "storybook": "start-storybook -p 9001 -c .storybook -s .storybook/assets",
+    "storybook": "start-storybook -p 9002 -c .storybook -s .storybook/assets",
     "build:storybook": "rimraf docs && build-storybook -c .storybook -s .storybook/assets -o docs"
   },
   "repository": {

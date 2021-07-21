@@ -5,16 +5,16 @@ import {
   StyleSheet,
 } from 'react-native';
 
-type TButtonProps = {
-  children?: string;
-  glyph?: string;
-  option?:
-  | 'emphasized'
-  | 'transparent',
-  onPress?: () => void;
-};
+// type TButtonProps = {
+//   children?: string;
+//   glyph?: string;
+//   option?:
+//   | 'emphasized'
+//   | 'transparent',
+//   onPress?: () => void;
+// };
 
-const Button: React.FunctionComponent<TButtonProps> = props => {
+const Button: React.FunctionComponent<any> = props => {
   const styles = StyleSheet.create({
     buttonText: {
       fontSize: 14,
