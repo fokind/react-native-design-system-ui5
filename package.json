@@ -1,6 +1,6 @@
 {
-  "name": "react-native-design-system",
-  "version": "1.2.4",
+  "name": "react-native-fundamental",
+  "version": "0.0.1",
   "description": "A reusabale component library and design rules for react-native.",
   "main": "src/index.js",
   "scripts": {
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iamshadmirza/react-native-design-system.git"
+    "url": "git+https://github.com/fokind/react-native-fundamental.git"
   },
-  "author": "Shad Mirza",
+  "author": "Dmitry Fokin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/iamshadmirza/react-native-design-system/issues"
+    "url": "https://github.com/fokind/react-native-fundamental/issues"
   },
-  "homepage": "https://github.com/iamshadmirza/react-native-design-system#readme",
+  "homepage": "https://github.com/fokind/react-native-fundamental#readme",
   "keywords": [
     "react-native",
     "reactjs",
