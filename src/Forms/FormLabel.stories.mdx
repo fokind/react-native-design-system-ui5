@@ -1,0 +1,33 @@
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { withKnobs, select, boolean } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
+import FormItem from './FormItem';
+import FormInput from './FormInput';
+import FormLabel from './FormLabel';
+
+<Meta title="FormLabel" component={FormLabel} />
+
+# FormLabel
+
+```js
+import { FormLabel } from 'react-native-fundmental';
+```
+
+A **FormLabel** is used to identify form components such as **FormInput**, **Checkbox** and **TextArea**. Best practice is to use this component as a child of **FormGroup**.
+
+# Examples
+
+## Primary
+
+<Preview>
+  <Story name="primary">
+    <FormItem>
+      <FormLabel>Default Label</FormLabel>
+      <FormInput />
+    </FormItem>
+  </Story>
+</Preview>
+
+# Properties
+
+<Props of={FormLabel} />

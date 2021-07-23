@@ -9,6 +9,8 @@ import { themeType } from './types/theme';
 import { colorsType } from './types/colors-type';
 export * from './types/Button';
 export * from './types/FormInput';
+export * from './types/FormItem';
+export * from './types/FormLabel';
 export * from './types/MenuAddButton';
 export * from './types/ActionButton';
 export * from './types/Avatar';
@@ -30,10 +32,9 @@ export * from './types/RadioItem';
 export * from './types/RadioButton';
 export * from './types/Flex';
 
-export let theme:themeType;
-export let colors:colorsType;
-
+export let theme: themeType;
+export let colors: colorsType;
 
 export const ThemeProvider: React.FC<{
-    value:themeType
+  value: themeType;
 }>;

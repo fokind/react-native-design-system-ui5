@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 import PropTypes from 'prop-types';
 
-const testIsEmpty = (value) => value === undefined || value?.length === 0;
+const testIsEmpty = value => value === undefined || value?.length === 0;
 
 const getInputStyle = ({ isEmpty }) => {
   const inputStyle = [styles.input];
@@ -12,14 +12,14 @@ const getInputStyle = ({ isEmpty }) => {
   return inputStyle;
 };
 
-const FormInput = (props) => {
+const FormInput = props => {
   const [isEmpty, setIsEmpty] = useState(testIsEmpty(props.value));
 
   return (
     <TextInput
       style={StyleSheet.flatten([getInputStyle({ isEmpty }), props.style])}
       placeholder={props.placeholder}
-      onChangeText={(event) => setIsEmpty(testIsEmpty(event))}
+      onChangeText={event => setIsEmpty(testIsEmpty(event))}
     />
   );
 };

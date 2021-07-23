@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { useThemeContext } from '../util/ThemeProvider';
 
-const renderChildren = (props) => {
+const renderChildren = props => {
   return (
     <>
       <Text style={StyleSheet.flatten([styles.text, props.textStyle])}>
@@ -13,14 +13,13 @@ const renderChildren = (props) => {
   );
 };
 
-const Button = (props) => {
+const Button = props => {
   const theme = useThemeContext();
   return (
     <TouchableOpacity
       {...props}
       onPress={props.onPress}
-      disabled={props.disabled}
-    >
+      disabled={props.disabled}>
       <View style={StyleSheet.flatten([styles.container, props.style])}>
         {renderChildren({ ...props, theme })}
       </View>
