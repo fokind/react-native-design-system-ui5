@@ -2,6 +2,7 @@ export * from './Avatar';
 export * from './ActionButton';
 export * from './Badge';
 export * from './Button';
+export * from './Forms';
 export * from './Card';
 export * from './CheckBox';
 export * from './CircularProgressBar';

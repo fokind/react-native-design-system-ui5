@@ -8,6 +8,7 @@ import * as React from 'react';
 import { themeType } from './types/theme';
 import { colorsType } from './types/colors-type';
 export * from './types/Button';
+export * from './types/FormInput';
 export * from './types/MenuAddButton';
 export * from './types/ActionButton';
 export * from './types/Avatar';
