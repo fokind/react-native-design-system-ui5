@@ -1,64 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { useThemeContext } from '../util/ThemeProvider';
 
-const getContainerStyle = ({ theme }) => {
-  const {
-    background,
-    borderColor,
-    borderWidth,
-    borderCornerRadius,
-  } = theme.sap_fiori_3.button; // TODO заменить
+const getContainerStyle = ({ theme, selected }) => {
+  const { button } = theme.sap_fiori_3; // TODO заменить
+  const { background, borderColor, borderWidth, borderCornerRadius } = button;
   const containerStyle = [
     styles.container,
     {
-      backgroundColor: background,
-      borderColor,
       borderWidth,
       borderRadius: borderCornerRadius,
     },
   ];
 
+  containerStyle.push({
+    backgroundColor: selected ? button.selected.background : background,
+    borderColor: selected ? button.selected.borderColor : borderColor,
+  });
+
   return containerStyle;
 };
 
-const getTextStyle = ({ theme }) => {
+const getTextStyle = ({ theme, selected }) => {
   const { button, fontFamily, fontSize, fontWeight } = theme.sap_fiori_3; // TODO заменить
   const textStyle = [
     styles.text,
     {
       fontSize,
-      color: button.textColor,
       fontWeight,
       fontFamily,
     },
   ];
 
+  textStyle.push({
+    color: selected ? button.selected.textColor : button.textColor,
+  });
+
   return textStyle;
-};
-
-const renderChildren = props => {
-  const { theme } = props;
-
-  return (
-    <Text
-      style={StyleSheet.flatten([getTextStyle({ theme }), props.textStyle])}>
-      {props.children}
-    </Text>
-  );
 };
 
 const Button = props => {
   const theme = useThemeContext();
+  const [isPressed, setIsPressed] = useState(false);
 
   return (
     <TouchableOpacity
       {...props}
+      onPressIn={() => setIsPressed(true)}
+      onPressOut={() => setIsPressed(false)}
       onPress={props.onPress}
       disabled={props.disabled}
-      style={StyleSheet.flatten([getContainerStyle({ theme }), props.style])}>
-      {renderChildren({ ...props, theme })}
+      activeOpacity={1}
+      style={StyleSheet.flatten([
+        getContainerStyle({ theme, selected: isPressed }),
+        props.style,
+      ])}>
+      <Text
+        style={StyleSheet.flatten([
+          getTextStyle({ theme, selected: isPressed }),
+          props.textStyle,
+        ])}>
+        {props.children}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -92,6 +96,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 9,
     height: 36,
     borderStyle: 'solid',
+    opacity: 1,
   },
 });
 

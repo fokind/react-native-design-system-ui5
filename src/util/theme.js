@@ -11,7 +11,12 @@ const theme = {
       borderCornerRadius: 4,
       background: '#fff',
       borderColor: '#0854a0',
-      textColor: '#32363a',
+      textColor: '#0854a0',
+      selected: {
+        background: '#0854a0',
+        borderColor: '#0854a0',
+        textColor: '#fff',
+      },
     },
     field: {
       background: '#fff',
