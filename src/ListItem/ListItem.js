@@ -22,7 +22,7 @@ ListItem.propTypes = {
   /**  Pass button text as children as children */
   children: PropTypes.string.isRequired,
   /**  Callback function; triggered when the button is pressed */
-  onPress: PropTypes.func.isRequired,
+  onPress: PropTypes.func,
 };
 
 ListItem.defaultProps = {

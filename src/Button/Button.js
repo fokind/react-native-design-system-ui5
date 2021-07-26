@@ -1,28 +1,58 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { useThemeContext } from '../util/ThemeProvider';
 
+const getContainerStyle = ({ theme }) => {
+  const { background, borderColor, borderWidth } = theme.sap_fiori_3.button; // TODO заменить
+  const containerStyle = [
+    styles.container,
+    {
+      backgroundColor: background,
+      borderColor,
+      borderWidth,
+    },
+  ];
+
+  return containerStyle;
+};
+
+const getTextStyle = ({ theme }) => {
+  const { button, fontFamily, fontSize, fontWeight } = theme.sap_fiori_3; // TODO заменить
+  const textStyle = [
+    styles.text,
+    {
+      fontSize,
+      color: button.textColor,
+      fontWeight,
+      fontFamily,
+    },
+  ];
+
+  return textStyle;
+};
+
 const renderChildren = props => {
+  const { theme } = props;
+
   return (
-    <>
-      <Text style={StyleSheet.flatten([styles.text, props.textStyle])}>
-        {props.children}
-      </Text>
-    </>
+    <Text
+      style={StyleSheet.flatten([getTextStyle({ theme }), props.textStyle])}>
+      {props.children}
+    </Text>
   );
 };
 
 const Button = props => {
   const theme = useThemeContext();
+
   return (
     <TouchableOpacity
       {...props}
       onPress={props.onPress}
-      disabled={props.disabled}>
-      <View style={StyleSheet.flatten([styles.container, props.style])}>
-        {renderChildren({ ...props, theme })}
-      </View>
+      disabled={props.disabled}
+      style={StyleSheet.flatten([getContainerStyle({ theme }), props.style])}>
+      {renderChildren({ ...props, theme })}
     </TouchableOpacity>
   );
 };
@@ -47,28 +77,16 @@ Button.defaultProps = {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 14,
     lineHeight: 19.6,
-    color: '#32363a',
-    fontWeight: '400',
-    fontFamily: '"72", "72full", Arial, Helvetica, sans-serif',
   },
   container: {
-    left: 0,
-    right: 0,
     borderRadius: 4,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 9,
-    textVerticalAlign: 'middle',
-    whiteSpace: 'nowrap',
     height: 36,
     borderStyle: 'solid',
-    borderWidth: 1,
-    color: '#0854a0',
-    borderColor: '#0854a0',
-    backgroundColor: '#fff',
   },
 });
 

@@ -9,28 +9,22 @@ import Button from './Button';
 
 # Button
 
-A **Button** allows users to perform an action. The priority of buttons within a page should be considered. For instance, only use the main button once within a page or dialog. Color is also important. For instance, the most important button has a blue background where as a red button should only be used if the action it performs is potentially destructive.
-
-# Usage
-
 ```js
 import { Button } from 'react-native-fundmental';
-
-<Button onPress={() => this.handleChange())}>
-  Press Me
-</Button>
 ```
 
-# Props
+A **Button** allows users to perform an action. The priority of buttons within a page should be considered. For instance, only use the main button once within a page or dialog. Color is also important. For instance, the most important button has a blue background where as a red button should only be used if the action it performs is potentially destructive.
+
+# Examples
+
+## Primary
+
+<Preview>
+  <Story name="primary">
+    <Button onPress={() => {}}>Press me</Button>
+  </Story>
+</Preview>
+
+# Properties
 
 <Props of={Button} />
-
-# Playground
-
-Play with Button in Canvas mode.
-
-<Story name="playground" parameters={{ decorators: [withKnobs] }}>
-  <Button disabled={boolean('disabled', false)} onPress={action('pressed')}>
-    Press Me
-  </Button>
-</Story>
