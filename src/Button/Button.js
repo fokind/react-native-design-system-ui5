@@ -4,13 +4,19 @@ import PropTypes from 'prop-types';
 import { useThemeContext } from '../util/ThemeProvider';
 
 const getContainerStyle = ({ theme }) => {
-  const { background, borderColor, borderWidth } = theme.sap_fiori_3.button; // TODO заменить
+  const {
+    background,
+    borderColor,
+    borderWidth,
+    borderCornerRadius,
+  } = theme.sap_fiori_3.button; // TODO заменить
   const containerStyle = [
     styles.container,
     {
       backgroundColor: background,
       borderColor,
       borderWidth,
+      borderRadius: borderCornerRadius,
     },
   ];
 
@@ -80,7 +86,6 @@ const styles = StyleSheet.create({
     lineHeight: 19.6,
   },
   container: {
-    borderRadius: 4,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

@@ -7,14 +7,24 @@ const theme = {
     textColor: '#32363a',
     fontWeight: '400',
     button: {
+      borderWidth: 1,
+      borderCornerRadius: 4,
       background: '#fff',
       borderColor: '#0854a0',
-      borderWidth: 1,
       textColor: '#32363a',
     },
     field: {
-      labelColor: 'rgb(106, 109, 112)',
-      requiredColor: 'red',
+      background: '#fff',
+      textColor: '#32363a',
+      placeholderTextColor: '#74777a',
+      borderColor: '#89919a',
+      helpBackground: '#fff',
+      borderWidth: 1,
+      borderCornerRadius: 4,
+      requiredColor: '#ce3b3b',
+    },
+    content: {
+      labelColor: '#6a6d70',
     },
   },
   fontSize: {
