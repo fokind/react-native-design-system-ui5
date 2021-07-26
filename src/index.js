@@ -8,6 +8,7 @@ export * from './CheckBox';
 export * from './CircularProgressBar';
 export * from './FullScreenLoader';
 export * from './Header';
+export * from './Icon';
 export * from './Input';
 export * from './ListItem';
 export * from './Overlay';
