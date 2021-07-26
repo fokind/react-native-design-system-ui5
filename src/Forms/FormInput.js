@@ -51,6 +51,8 @@ const FormInput = props => {
   );
 };
 
+FormInput.displayName = 'FormInput';
+
 FormInput.propTypes = {
   /**  To override default style */
   style: PropTypes.object,
