@@ -2,27 +2,62 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { useThemeContext } from '../util/ThemeProvider';
+import { BUTTON_OPTIONS } from '../util/constants';
 
-const getContainerStyle = ({ theme, selected }) => {
+const getContainerStyle = ({ theme, selected, option, type, disabled }) => {
   const { button } = theme.sap_fiori_3; // TODO заменить
   const { background, borderColor, borderWidth, borderCornerRadius } = button;
   const containerStyle = [
     styles.container,
     {
+      backgroundColor: background,
+      borderColor: borderColor,
       borderWidth,
       borderRadius: borderCornerRadius,
     },
   ];
 
-  containerStyle.push({
-    backgroundColor: selected ? button.selected.background : background,
-    borderColor: selected ? button.selected.borderColor : borderColor,
-  });
+  switch (option) {
+    case 'emphasized':
+      if (selected) {
+        containerStyle.push({
+          backgroundColor: button.emphasized.active.background,
+          borderColor: button.emphasized.active.borderColor,
+        });
+      } else {
+        containerStyle.push({
+          backgroundColor: button.emphasized.background,
+          borderColor: button.emphasized.borderColor,
+        });
+      }
+      break;
+    case 'transparent':
+      if (selected) {
+        containerStyle.push({
+          backgroundColor: button.active.background,
+          borderColor: button.selected.borderColor,
+        });
+      } else {
+        containerStyle.push({
+          backgroundColor: button.lite.background,
+          borderColor: button.lite.borderColor,
+        });
+      }
+      break;
+    default:
+      if (selected) {
+        containerStyle.push({
+          backgroundColor: button.active.background,
+          borderColor: button.selected.borderColor,
+        });
+      }
+      break;
+  }
 
   return containerStyle;
 };
 
-const getTextStyle = ({ theme, selected }) => {
+const getTextStyle = ({ theme, selected, option, type, disabled }) => {
   const { button, fontFamily, fontSize, fontWeight } = theme.sap_fiori_3; // TODO заменить
   const textStyle = [
     styles.text,
@@ -30,35 +65,53 @@ const getTextStyle = ({ theme, selected }) => {
       fontSize,
       fontWeight,
       fontFamily,
+      color: button.textColor,
     },
   ];
 
-  textStyle.push({
-    color: selected ? button.selected.textColor : button.textColor,
-  });
+  switch (option) {
+    case 'emphasized':
+      if (selected) {
+        textStyle.push({
+          color: button.emphasized.textColor,
+        });
+      } else {
+        textStyle.push({
+          color: button.emphasized.textColor,
+        });
+      }
+      break;
+    default:
+      if (selected) {
+        textStyle.push({
+          color: button.selected.textColor,
+        });
+      }
+      break;
+  }
 
   return textStyle;
 };
 
 const Button = props => {
   const theme = useThemeContext();
-  const [isPressed, setIsPressed] = useState(false);
+  const [selected, setSelected] = useState(false);
 
   return (
     <TouchableOpacity
       {...props}
-      onPressIn={() => setIsPressed(true)}
-      onPressOut={() => setIsPressed(false)}
+      onPressIn={() => setSelected(true)}
+      onPressOut={() => setSelected(false)}
       onPress={props.onPress}
       disabled={props.disabled}
       activeOpacity={1}
       style={StyleSheet.flatten([
-        getContainerStyle({ theme, selected: isPressed }),
+        getContainerStyle({ theme, selected, option: props.option }),
         props.style,
       ])}>
       <Text
         style={StyleSheet.flatten([
-          getTextStyle({ theme, selected: isPressed }),
+          getTextStyle({ theme, selected, option: props.option }),
           props.textStyle,
         ])}>
         {props.children}
@@ -74,6 +127,8 @@ Button.propTypes = {
   textStyle: PropTypes.object,
   /**  Pass button text as children as children */
   children: PropTypes.string,
+  /**  Indicates the importance of the button: 'emphasized' or 'transparent' */
+  option: PropTypes.oneOf(BUTTON_OPTIONS),
   /**  Callback function; triggered when the button is pressed */
   onPress: PropTypes.func.isRequired,
   /**  Boolean value for disabled button */

@@ -12,10 +12,29 @@ const theme = {
       background: '#fff',
       borderColor: '#0854a0',
       textColor: '#0854a0',
+      active: {
+        background: '#0854a0',
+        borderColor: '#0854a0',
+        textColor: '#fff',
+      },
       selected: {
         background: '#0854a0',
         borderColor: '#0854a0',
         textColor: '#fff',
+      },
+      emphasized: {
+        background: '#0a6ed1',
+        borderColor: '#0a6ed1',
+        textColor: '#fff',
+        active: {
+          background: '#0854a0',
+          borderColor: '#0854a0',
+          textColor: '#fff',
+        },
+      },
+      lite: {
+        background: 'transparent',
+        borderColor: 'transparent',
       },
     },
     field: {

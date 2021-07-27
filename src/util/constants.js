@@ -1,3 +1,14 @@
+export const BUTTON_OPTIONS = ['emphasized', 'transparent'];
+
+export const BUTTON_TYPES = [
+  'standard',
+  'positive',
+  'negative',
+  'medium',
+  'ghost',
+  'attention',
+];
+
 export const ICON_SIZES = {
   s: 12,
   '': 14,

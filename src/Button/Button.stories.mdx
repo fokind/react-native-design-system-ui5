@@ -1,7 +1,7 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import { withKnobs, select, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import Stack from '../Layout/Stack';
+import Inline from '../Layout/Inline';
 import Button from './Button';
 
 <Meta title="Button" component={Button} />
@@ -20,7 +20,31 @@ A **Button** allows users to perform an action. The priority of buttons within a
 
 <Preview>
   <Story name="primary">
-    <Button onPress={() => {}}>Press me</Button>
+    <Inline>
+      <Button onPress={() => {}}>Press me</Button>
+    </Inline>
+  </Story>
+</Preview>
+
+## Options
+
+There are three emphasis styles used to indicate the importance of the button on the page.
+
+- **Emphasized Button**: There should only be one highlighted button on the page. This is the primary call to action.
+- **Regular Button**: The default button style and the most common button. There may be more than one on a page.
+- **Transparent Button**: This is the lowest priority button and most often used with page content like appearing in a table or list. There may be more than one on the page.
+
+<Preview>
+  <Story name="options">
+    <Inline>
+      <Button option="emphasized" onPress={() => {}}>
+        Emphasized Button
+      </Button>
+      <Button onPress={() => {}}>Regular Button</Button>
+      <Button option="transparent" onPress={() => {}}>
+        Transparent Button
+      </Button>
+    </Inline>
   </Story>
 </Preview>
 
