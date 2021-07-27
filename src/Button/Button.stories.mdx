@@ -2,6 +2,7 @@ import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import { withKnobs, select, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import Inline from '../Layout/Inline';
+import Stack from '../Layout/Stack';
 import Button from './Button';
 
 <Meta title="Button" component={Button} />
@@ -66,6 +67,62 @@ There are three emphasis styles used to indicate the importance of the button on
       <Button type="negative" onPress={() => {}}>
         Negative Button
       </Button>
+    </Inline>
+  </Story>
+</Preview>
+
+## States
+
+There are four states: default, selected, disabled, and allowFocusOnDisable. allowFocusOnDisabled allows a disabled button to be focusable. This is to ensure a screen reader can tab into the button and read its state. if allowFocusOnDisabled is selected there must be a disabledMessage and enabledMessage prop within the button that is used by the screen reader to announce a message to the user informing them why the button is disabled, or give instructions on how to enable this button then subsequently announce to the user when the button becomes enabled.
+
+<Preview>
+  <Story name="states">
+    <Inline>
+      <Stack>
+        <Button onPress={() => {}}>Default</Button>
+        <Button option="emphasized" onPress={() => {}}>
+          Emphasized
+        </Button>
+        <Button option="transparent" onPress={() => {}}>
+          Transparent
+        </Button>
+        <Button type="positive" onPress={() => {}}>
+          Positive
+        </Button>
+        <Button type="negative" onPress={() => {}}>
+          Negative
+        </Button>
+      </Stack>
+      <Stack>
+        <Button selected onPress={() => {}}>Selected</Button>
+        <Button selected option="emphasized" onPress={() => {}}>
+          Emphasized
+        </Button>
+        <Button selected option="transparent" onPress={() => {}}>
+          Transparent
+        </Button>
+        <Button selected type="positive" onPress={() => {}}>
+          Positive
+        </Button>
+        <Button selected type="negative" onPress={() => {}}>
+          Negative
+        </Button>
+      </Stack>
+      <Stack>
+        <Button disabled onPress={() => {}}>Disabled</Button>
+        <Button disabled option="emphasized" onPress={() => {}}>
+          Emphasized
+        </Button>
+        <Button disabled option="transparent" onPress={() => {}}>
+          Transparent
+        </Button>
+        <Button disabled type="positive" onPress={() => {}}>
+          Positive
+        </Button>
+        <Button disabled type="negative" onPress={() => {}}>
+          Negative
+        </Button>
+      </Stack>
     </Inline>
   </Story>
 </Preview>

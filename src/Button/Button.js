@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { useThemeContext } from '../util/ThemeProvider';
-import { BUTTON_OPTIONS } from '../util/constants';
+import { BUTTON_OPTIONS, BUTTON_TYPES } from '../util/constants';
 
 const getContainerStyle = ({ theme, selected, option, type, disabled }) => {
   const { button } = theme.sap_fiori_3; // TODO заменить
@@ -14,8 +14,15 @@ const getContainerStyle = ({ theme, selected, option, type, disabled }) => {
       borderColor: borderColor,
       borderWidth,
       borderRadius: borderCornerRadius,
+      opacity: 1,
     },
   ];
+
+  if (disabled) {
+    containerStyle.push({
+      opacity: 0.4,
+    });
+  }
 
   switch (option) {
     case 'emphasized':
@@ -86,7 +93,7 @@ const getContainerStyle = ({ theme, selected, option, type, disabled }) => {
   return containerStyle;
 };
 
-const getTextStyle = ({ theme, selected, option, type, disabled }) => {
+const getTextStyle = ({ theme, selected, option, type }) => {
   const { button, fontFamily, fontSize, fontWeight } = theme.sap_fiori_3; // TODO заменить
   const textStyle = [
     styles.text,
@@ -162,9 +169,10 @@ const Button = props => {
       style={StyleSheet.flatten([
         getContainerStyle({
           theme,
-          selected,
+          selected: selected || props.selected,
           option: props.option,
           type: props.type,
+          disabled: props.disabled,
         }),
         props.style,
       ])}>
@@ -172,7 +180,7 @@ const Button = props => {
         style={StyleSheet.flatten([
           getTextStyle({
             theme,
-            selected,
+            selected: selected || props.selected,
             option: props.option,
             type: props.type,
           }),
@@ -191,17 +199,18 @@ Button.propTypes = {
   textStyle: PropTypes.object,
   /**  Pass button text as children as children */
   children: PropTypes.string,
-  /**  Indicates the importance of the button: 'emphasized' or 'transparent' */
-  option: PropTypes.oneOf(BUTTON_OPTIONS),
-  /**  Callback function; triggered when the button is pressed */
-  onPress: PropTypes.func.isRequired,
   /**  Boolean value for disabled button */
   disabled: PropTypes.bool,
-};
-
-Button.defaultProps = {
-  children: '',
-  disabled: false,
+  /**  Indicates the importance of the button: 'emphasized' or 'transparent' */
+  option: PropTypes.oneOf(BUTTON_OPTIONS),
+  /** Set to **true** to set state of the button to "selected" */
+  selected: PropTypes.bool,
+  /** Sets the variation of the component. Primarily used for styling: 'standard',
+  'positive',
+  'negative' */
+  type: PropTypes.oneOf(BUTTON_TYPES),
+  /**  Callback function; triggered when the button is pressed */
+  onPress: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -215,7 +224,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 9,
     height: 36,
     borderStyle: 'solid',
-    opacity: 1,
   },
 });
 
