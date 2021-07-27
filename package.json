@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 9003 -c .storybook -s .storybook/assets",
+    "storybook": "start-storybook -p 9004 -c .storybook -s .storybook/assets",
     "build:storybook": "build-storybook -c .storybook -s .storybook/assets -o docs"
   },
   "repository": {
@@ -30,7 +30,9 @@
   ],
   "dependencies": {
     "clamp": "^1.0.1",
-    "prop-types": "^15.7.2"
+    "moment": "^2.29.1",
+    "prop-types": "^15.7.2",
+    "react-native-easy-grid": "^0.2.2"
   },
   "peerDependencies": {
     "react-native": ">=0.56.0",
