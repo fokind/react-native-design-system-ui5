@@ -3,90 +3,53 @@ import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { useThemeContext } from '../util/ThemeProvider';
 import { BUTTON_OPTIONS, BUTTON_TYPES } from '../util/constants';
+import createStyles from './styles';
 
 const getContainerStyle = ({ theme, selected, option, type, disabled }) => {
+  const containerStyles = createStyles(theme.sap_fiori_3);
   const { button } = theme.sap_fiori_3; // TODO заменить
-  const { background, borderColor, borderWidth, borderCornerRadius } = button;
-  const containerStyle = [
-    styles.container,
-    {
-      backgroundColor: background,
-      borderColor: borderColor,
-      borderWidth,
-      borderRadius: borderCornerRadius,
-      opacity: 1,
-    },
-  ];
+  const containerStyle = [containerStyles.container];
 
   if (disabled) {
-    containerStyle.push({
-      opacity: 0.4,
-    });
+    containerStyle.push(containerStyles.containerDisabled);
   }
 
   switch (option) {
     case 'emphasized':
-      if (selected) {
-        containerStyle.push({
-          backgroundColor: button.emphasized.active.background,
-          borderColor: button.emphasized.active.borderColor,
-        });
-      } else {
-        containerStyle.push({
-          backgroundColor: button.emphasized.background,
-          borderColor: button.emphasized.borderColor,
-        });
-      }
+      containerStyle.push(
+        selected
+          ? containerStyles.containerEmphasizedPressed
+          : containerStyles.containerEmphasized,
+      );
       break;
     case 'transparent':
-      if (selected) {
-        containerStyle.push({
-          backgroundColor: button.active.background,
-          borderColor: button.selected.borderColor,
-        });
-      } else {
-        containerStyle.push({
-          backgroundColor: button.lite.background,
-          borderColor: button.lite.borderColor,
-        });
-      }
+      containerStyle.push(
+        selected
+          ? containerStyles.containerTransparentPressed
+          : containerStyles.containerTransparent,
+      );
       break;
     default:
       if (selected) {
-        containerStyle.push({
-          backgroundColor: button.active.background,
-          borderColor: button.selected.borderColor,
-        });
+        containerStyle.push(containerStyles.containerStandardPressed);
       }
       break;
   }
 
   switch (type) {
     case 'positive':
-      if (selected) {
-        containerStyle.push({
-          backgroundColor: button.accept.active.background,
-          borderColor: button.accept.active.borderColor,
-        });
-      } else {
-        containerStyle.push({
-          backgroundColor: button.accept.background,
-          borderColor: button.accept.borderColor,
-        });
-      }
+      containerStyle.push(
+        selected
+          ? containerStyles.containerPositivePressed
+          : containerStyles.containerPositive,
+      );
       break;
     case 'negative':
-      if (selected) {
-        containerStyle.push({
-          backgroundColor: button.reject.active.background,
-          borderColor: button.reject.active.borderColor,
-        });
-      } else {
-        containerStyle.push({
-          backgroundColor: button.reject.background,
-          borderColor: button.reject.borderColor,
-        });
-      }
+      containerStyle.push(
+        selected
+          ? containerStyles.containerNegativePressed
+          : containerStyles.containerNegative,
+      );
       break;
   }
 
@@ -216,14 +179,6 @@ Button.propTypes = {
 const styles = StyleSheet.create({
   text: {
     lineHeight: 19.6,
-  },
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 9,
-    height: 36,
-    borderStyle: 'solid',
   },
 });
 
