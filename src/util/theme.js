@@ -36,6 +36,24 @@ const theme = {
         background: 'transparent',
         borderColor: 'transparent',
       },
+      accept: {
+        background: '#fff',
+        borderColor: '#107e3e',
+        textColor: '#107e3e',
+        active: {
+          background: '#0d6733',
+          borderColor: '#0d6733',
+        },
+      },
+      reject: {
+        background: '#fff',
+        borderColor: '#bb0000',
+        textColor: '#b00',
+        active: {
+          background: '#a20000',
+          borderColor: '#a20000',
+        },
+      },
     },
     field: {
       background: '#fff',

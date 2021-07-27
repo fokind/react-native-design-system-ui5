@@ -54,6 +54,35 @@ const getContainerStyle = ({ theme, selected, option, type, disabled }) => {
       break;
   }
 
+  switch (type) {
+    case 'positive':
+      if (selected) {
+        containerStyle.push({
+          backgroundColor: button.accept.active.background,
+          borderColor: button.accept.active.borderColor,
+        });
+      } else {
+        containerStyle.push({
+          backgroundColor: button.accept.background,
+          borderColor: button.accept.borderColor,
+        });
+      }
+      break;
+    case 'negative':
+      if (selected) {
+        containerStyle.push({
+          backgroundColor: button.reject.active.background,
+          borderColor: button.reject.active.borderColor,
+        });
+      } else {
+        containerStyle.push({
+          backgroundColor: button.reject.background,
+          borderColor: button.reject.borderColor,
+        });
+      }
+      break;
+  }
+
   return containerStyle;
 };
 
@@ -90,6 +119,31 @@ const getTextStyle = ({ theme, selected, option, type, disabled }) => {
       break;
   }
 
+  switch (type) {
+    case 'positive':
+      if (selected) {
+        textStyle.push({
+          color: button.selected.textColor,
+        });
+      } else {
+        textStyle.push({
+          color: button.accept.textColor,
+        });
+      }
+      break;
+    case 'negative':
+      if (selected) {
+        textStyle.push({
+          color: button.selected.textColor,
+        });
+      } else {
+        textStyle.push({
+          color: button.reject.textColor,
+        });
+      }
+      break;
+  }
+
   return textStyle;
 };
 
@@ -106,12 +160,22 @@ const Button = props => {
       disabled={props.disabled}
       activeOpacity={1}
       style={StyleSheet.flatten([
-        getContainerStyle({ theme, selected, option: props.option }),
+        getContainerStyle({
+          theme,
+          selected,
+          option: props.option,
+          type: props.type,
+        }),
         props.style,
       ])}>
       <Text
         style={StyleSheet.flatten([
-          getTextStyle({ theme, selected, option: props.option }),
+          getTextStyle({
+            theme,
+            selected,
+            option: props.option,
+            type: props.type,
+          }),
           props.textStyle,
         ])}>
         {props.children}

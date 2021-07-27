@@ -48,6 +48,28 @@ There are three emphasis styles used to indicate the importance of the button on
   </Story>
 </Preview>
 
+## Types
+
+There are three emphasis styles used to indicate the importance of the button on the page.
+
+- **Standard Button**: Neutral or informative color.
+- **Positive Button**: Used for positive actions such as approved, ok, yes.
+- **Negative Button**: Used for negative actions such as decline, cancel, no.
+
+<Preview>
+  <Story name="types">
+    <Inline>
+      <Button onPress={() => {}}>Standard Button</Button>
+      <Button type="positive" onPress={() => {}}>
+        Positive Button
+      </Button>
+      <Button type="negative" onPress={() => {}}>
+        Negative Button
+      </Button>
+    </Inline>
+  </Story>
+</Preview>
+
 # Properties
 
 <Props of={Button} />
