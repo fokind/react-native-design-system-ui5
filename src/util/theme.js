@@ -68,6 +68,9 @@ const theme = {
     content: {
       labelColor: '#6a6d70',
     },
+    legend: {
+      workingBackground: '#fafafa',
+    },
   },
   fontSize: {
     xxsmall: 11,

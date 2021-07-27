@@ -6,6 +6,7 @@ import { BUTTON_OPTIONS, BUTTON_TYPES } from '../util/constants';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import moment from 'moment';
 import Button from '../Button/Button';
+import CalendarItem from './_CalendarItem';
 
 const handlePrevious = () => {};
 const showMonths = () => {};
@@ -105,7 +106,6 @@ const generateDays = tableBodyProps => {
 
   for (let week = 0; week < 6; week++) {
     for (let iterations = 0; iterations < 7; iterations++) {
-      console.log(day);
       dateFormatted = day.date();
       // const copyDate = moment(day);
       // const isDisabled = false; // !isDateEnabled(day, this.props);
@@ -130,7 +130,7 @@ const generateDays = tableBodyProps => {
         <Row key={i}>
           {r.map((c, k) => (
             <Col key={k}>
-              <Text>{c}</Text>
+              <CalendarItem>{c}</CalendarItem>
             </Col>
           ))}
         </Row>
