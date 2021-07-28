@@ -4,12 +4,20 @@ import PropTypes from 'prop-types';
 import { useThemeContext } from '../util/ThemeProvider';
 import createStyles from './styles';
 
-const getItemStyle = ({ theme, isActive, otherMonth }) => {
+const getItemStyle = ({ theme, isActive, otherMonth, current, isWeekend }) => {
   const itemStyles = createStyles(theme.sap_fiori_3);
   const itemStyle = [itemStyles.item];
 
   if (otherMonth) {
     itemStyle.push(itemStyles.itemOtherMonth);
+  }
+
+  if (current) {
+    itemStyle.push(itemStyles.itemCurrent);
+  }
+
+  if (isWeekend) {
+    itemStyle.push(itemStyles.itemWeekend);
   }
 
   if (isActive) {
@@ -42,6 +50,8 @@ const CalendarItem = props => {
           theme,
           isActive: isSelected,
           otherMonth: props.otherMonth,
+          current: props.current,
+          isWeekend: props.isWeekend,
         }),
         props.style,
       ])}
@@ -65,6 +75,8 @@ CalendarItem.propTypes = {
   /**  Pass button text as children as children */
   children: PropTypes.string,
   otherMonth: PropTypes.bool,
+  current: PropTypes.bool,
+  isWeekend: PropTypes.bool,
 };
 
 export default CalendarItem;

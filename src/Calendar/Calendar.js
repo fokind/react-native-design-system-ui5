@@ -13,6 +13,10 @@ const showMonths = () => {};
 const showYears = () => {};
 const handleNext = () => {};
 
+const isWeekend = date => {
+  return [0, 6].includes(date.day());
+};
+
 const generateNavigation = ({ locale, currentDateDisplayed }) => {
   const months = moment.localeData(locale).months();
   // const previousButtonLabel = showYears ? show12PreviousYears : previousMonth;
@@ -95,8 +99,7 @@ const generateWeekdays = ({ locale, weekdayStart }) => {
 
 const generateDays = ({ currentDateDisplayed, weekdayStart }) => {
   const enableRangeSelection = false;
-  // const todayDate;
-
+  const todayDate = moment().startOf('day');
   const firstDayMonth = moment(currentDateDisplayed).startOf('month');
   const firstDayWeekMonth = moment(firstDayMonth)
     .day(0)
@@ -135,7 +138,12 @@ const generateDays = ({ currentDateDisplayed, weekdayStart }) => {
         <Row key={i}>
           {r.map((d, k) => (
             <Col key={k}>
-              <CalendarItem otherMonth={!d.isSame(currentDateDisplayed, 'month')}>{d.date().toString()}</CalendarItem>
+              <CalendarItem
+                otherMonth={!d.isSame(currentDateDisplayed, 'month')}
+                current={todayDate.isSame(d)}
+                isWeekend={isWeekend(d)}>
+                {d.date().toString()}
+              </CalendarItem>
             </Col>
           ))}
         </Row>

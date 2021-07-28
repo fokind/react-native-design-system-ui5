@@ -74,6 +74,8 @@ const theme = {
     },
     legend: {
       workingBackground: '#fafafa',
+      nonWorkingBackground: '#dedede',
+      currentDateTime: '#c0399f',
     },
     list: {
       background: '#fff',

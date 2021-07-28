@@ -1,5 +1,5 @@
 const createStyles = theme => {
-  const { legend, content, textColor, list, calendar } = theme;
+  const { legend, content, textColor, list } = theme;
 
   return {
     container: {
@@ -19,6 +19,13 @@ const createStyles = theme => {
     },
     itemOtherMonth: {
       backgroundColor: list.background,
+    },
+    itemCurrent: {
+      borderWidth: 3,
+      borderColor: legend.currentDateTime,
+    },
+    itemWeekend: {
+      backgroundColor: legend.nonWorkingBackground,
     },
     text: {
       color: textColor,
