@@ -4,6 +4,7 @@ const theme = {
   sap_fiori_3: {
     fontFamily: '"72", "72full", Arial, Helvetica, sans-serif',
     fontSize: 14,
+    fontSmallSize: 12,
     textColor: '#32363a',
     fontWeight: '400',
     button: {

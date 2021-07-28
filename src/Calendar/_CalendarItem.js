@@ -67,6 +67,8 @@ const CalendarItem = props => {
   );
 };
 
+CalendarItem.displayName = 'CalendarItem';
+
 CalendarItem.propTypes = {
   /**  To override default style */
   style: PropTypes.object,

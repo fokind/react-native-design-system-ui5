@@ -1,5 +1,5 @@
 const createStyles = theme => {
-  const { legend, content, textColor, list } = theme;
+  const { legend, content, textColor, list, fontSmallSize } = theme;
 
   return {
     container: {
@@ -26,6 +26,15 @@ const createStyles = theme => {
     },
     itemWeekend: {
       backgroundColor: legend.nonWorkingBackground,
+    },
+    itemSideHelper: {
+      alignSelf: 'center',
+      height: 30,
+      backgroundColor: list.background,
+    },
+    itemSideHelperText: {
+      fontSize: fontSmallSize,
+      color: content.labelColor,
     },
     text: {
       color: textColor,

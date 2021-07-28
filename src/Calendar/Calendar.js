@@ -6,6 +6,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import moment from 'moment';
 import Button from '../Button/Button';
 import CalendarItem from './_CalendarItem';
+import CalendarItemSideHelper from './_CalendarItemSideHelper';
 import { isDateBetween, isDateEnabled, resolveFormat } from '../util/dateUtils';
 
 const handlePrevious = () => {};
@@ -90,7 +91,7 @@ const generateWeekdays = ({ locale, weekdayStart }) => {
     <Row>
       {weekDays.map((value, index) => (
         <Col key={index}>
-          <Text>{value}</Text>
+          <CalendarItemSideHelper>{value}</CalendarItemSideHelper>
         </Col>
       ))}
     </Row>

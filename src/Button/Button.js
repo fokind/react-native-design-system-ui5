@@ -240,10 +240,4 @@ Button.propTypes = {
   onPress: PropTypes.func,
 };
 
-const styles = StyleSheet.create({
-  text: {
-    lineHeight: 19.6,
-  },
-});
-
 export default Button;
