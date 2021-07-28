@@ -67,9 +67,16 @@ const theme = {
     },
     content: {
       labelColor: '#6a6d70',
+      selected: {
+        background: '#0854a0',
+        textColor: '#fff',
+      },
     },
     legend: {
       workingBackground: '#fafafa',
+    },
+    list: {
+      background: '#fff',
     },
   },
   fontSize: {

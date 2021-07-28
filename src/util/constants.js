@@ -4,9 +4,6 @@ export const BUTTON_TYPES = [
   'standard',
   'positive',
   'negative',
-  'medium',
-  'ghost',
-  'attention',
 ];
 
 export const ICON_SIZES = {
@@ -15,3 +12,5 @@ export const ICON_SIZES = {
   l: 20,
   xl: 24,
 };
+
+export const ISO_DATE_FORMAT = 'YYYY-MM-DD';

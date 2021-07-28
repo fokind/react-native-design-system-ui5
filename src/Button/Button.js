@@ -211,6 +211,8 @@ const Button = props => {
   );
 };
 
+Button.displayName = 'Button';
+
 Button.propTypes = {
   /**  To override default style */
   style: PropTypes.object,

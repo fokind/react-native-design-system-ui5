@@ -1,35 +1,59 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { useThemeContext } from '../util/ThemeProvider';
-import { BUTTON_OPTIONS, BUTTON_TYPES } from '../util/constants';
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import moment from 'moment';
-import Button from '../Button/Button';
+import createStyles from './styles';
 
-const getContainerStyle = ({ theme }) => {
-  const { legend } = theme.sap_fiori_3; // TODO заменить
-  const containerStyle = [
-    styles.container,
-    {
-      backgroundColor: legend.workingBackground,
-    },
-  ];
+const getItemStyle = ({ theme, isActive, otherMonth }) => {
+  const itemStyles = createStyles(theme.sap_fiori_3);
+  const itemStyle = [itemStyles.item];
 
-  return containerStyle;
+  if (otherMonth) {
+    itemStyle.push(itemStyles.itemOtherMonth);
+  }
+
+  if (isActive) {
+    itemStyle.push(itemStyles.itemActive);
+  }
+
+  return itemStyle;
+};
+
+const getTextStyle = ({ theme, isActive }) => {
+  const textStyles = createStyles(theme.sap_fiori_3);
+  const textStyle = [textStyles.text];
+
+  if (isActive) {
+    textStyle.push(textStyles.textActive);
+  }
+
+  return textStyle;
 };
 
 const CalendarItem = props => {
   const theme = useThemeContext();
+  const [isSelected, setIsSelected] = useState(false);
 
   return (
-    <View
+    <TouchableOpacity
       {...props}
-      style={StyleSheet.flatten([getContainerStyle({ theme }), props.style])}>
-      <Text style={StyleSheet.flatten([styles.text, props.textStyle])}>
+      style={StyleSheet.flatten([
+        getItemStyle({
+          theme,
+          isActive: isSelected,
+          otherMonth: props.otherMonth,
+        }),
+        props.style,
+      ])}
+      onPress={() => setIsSelected(true)}>
+      <Text
+        style={StyleSheet.flatten([
+          getTextStyle({ theme, isActive: isSelected }),
+          props.textStyle,
+        ])}>
         {props.children}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -40,28 +64,7 @@ CalendarItem.propTypes = {
   textStyle: PropTypes.object,
   /**  Pass button text as children as children */
   children: PropTypes.string,
-  /**  Boolean value for disabled button */
-  disabled: PropTypes.bool,
-  /**  Indicates the importance of the button: 'emphasized' or 'transparent' */
-  option: PropTypes.oneOf(BUTTON_OPTIONS),
-  /** Set to **true** to set state of the button to "selected" */
-  selected: PropTypes.bool,
-  /** Sets the variation of the component. Primarily used for styling: 'standard',
-  'positive',
-  'negative' */
-  type: PropTypes.oneOf(BUTTON_TYPES),
+  otherMonth: PropTypes.bool,
 };
-
-const styles = StyleSheet.create({
-  container: {
-    height: 44,
-    minWidth: 34,
-    margin: 1,
-    borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {},
-});
 
 export default CalendarItem;
