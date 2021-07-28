@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
 
 const createStyles = theme => {
-  const { button } = theme;
+  const { button, fontFamily, fontSize, fontWeight } = theme;
 
-  return StyleSheet.create({
+  return {
     container: {
       flexDirection: 'row',
       justifyContent: 'center',
@@ -56,7 +56,40 @@ const createStyles = theme => {
       backgroundColor: button.reject.active.background,
       borderColor: button.reject.active.borderColor,
     },
-  });
+    iconBeforeText: {
+      marginRight: 6,
+    },
+    iconAfterText: {
+      marginLeft: 6,
+    },
+    text: {
+      lineHeight: 19.6,
+      fontSize,
+      fontWeight,
+      fontFamily,
+    },
+    textColor: {
+      color: button.textColor,
+    },
+    textColorStandardPressed: {
+      color: button.selected.textColor,
+    },
+    textColorEmphasized: {
+      color: button.emphasized.textColor,
+    },
+    textColorPositive: {
+      color: button.accept.textColor,
+    },
+    textColorPositivePressed: {
+      color: button.selected.textColor,
+    },
+    textColorNegative: {
+      color: button.reject.textColor,
+    },
+    textColorNegativePressed: {
+      color: button.selected.textColor,
+    },
+  };
 };
 
 export default createStyles;

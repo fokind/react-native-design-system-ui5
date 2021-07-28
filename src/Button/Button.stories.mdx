@@ -22,7 +22,7 @@ A **Button** allows users to perform an action. The priority of buttons within a
 <Preview>
   <Story name="primary">
     <Inline>
-      <Button onPress={() => {}}>Press me</Button>
+      <Button>Press me</Button>
     </Inline>
   </Story>
 </Preview>
@@ -38,13 +38,9 @@ There are three emphasis styles used to indicate the importance of the button on
 <Preview>
   <Story name="options">
     <Inline>
-      <Button option="emphasized" onPress={() => {}}>
-        Emphasized Button
-      </Button>
-      <Button onPress={() => {}}>Regular Button</Button>
-      <Button option="transparent" onPress={() => {}}>
-        Transparent Button
-      </Button>
+      <Button option="emphasized">Emphasized Button</Button>
+      <Button>Regular Button</Button>
+      <Button option="transparent">Transparent Button</Button>
     </Inline>
   </Story>
 </Preview>
@@ -60,13 +56,9 @@ There are three emphasis styles used to indicate the importance of the button on
 <Preview>
   <Story name="types">
     <Inline>
-      <Button onPress={() => {}}>Standard Button</Button>
-      <Button type="positive" onPress={() => {}}>
-        Positive Button
-      </Button>
-      <Button type="negative" onPress={() => {}}>
-        Negative Button
-      </Button>
+      <Button>Standard Button</Button>
+      <Button type="positive">Positive Button</Button>
+      <Button type="negative">Negative Button</Button>
     </Inline>
   </Story>
 </Preview>
@@ -79,49 +71,96 @@ There are four states: default, selected, disabled, and allowFocusOnDisable. all
   <Story name="states">
     <Inline>
       <Stack>
-        <Button onPress={() => {}}>Default</Button>
-        <Button option="emphasized" onPress={() => {}}>
+        <Button>Default</Button>
+        <Button option="emphasized">Emphasized</Button>
+        <Button option="transparent">Transparent</Button>
+        <Button type="positive">Positive</Button>
+        <Button type="negative">Negative</Button>
+      </Stack>
+      <Stack>
+        <Button selected>Selected</Button>
+        <Button selected option="emphasized">
           Emphasized
         </Button>
-        <Button option="transparent" onPress={() => {}}>
+        <Button selected option="transparent">
           Transparent
         </Button>
-        <Button type="positive" onPress={() => {}}>
+        <Button selected type="positive">
           Positive
         </Button>
-        <Button type="negative" onPress={() => {}}>
+        <Button selected type="negative">
           Negative
         </Button>
       </Stack>
       <Stack>
-        <Button selected onPress={() => {}}>Selected</Button>
-        <Button selected option="emphasized" onPress={() => {}}>
+        <Button disabled>Disabled</Button>
+        <Button disabled option="emphasized">
           Emphasized
         </Button>
-        <Button selected option="transparent" onPress={() => {}}>
+        <Button disabled option="transparent">
           Transparent
         </Button>
-        <Button selected type="positive" onPress={() => {}}>
+        <Button disabled type="positive">
           Positive
         </Button>
-        <Button selected type="negative" onPress={() => {}}>
+        <Button disabled type="negative">
           Negative
         </Button>
       </Stack>
+    </Inline>
+  </Story>
+</Preview>
+
+## Icons
+
+Button can have an icon with text or just an icon.
+
+<Preview>
+  <Story name="icons">
+    <Inline>
       <Stack>
-        <Button disabled onPress={() => {}}>Disabled</Button>
-        <Button disabled option="emphasized" onPress={() => {}}>
-          Emphasized
+        <Button iconSet="FontAwesome" glyph="shopping-cart" option="emphasized">
+          Add to cart
         </Button>
-        <Button disabled option="transparent" onPress={() => {}}>
-          Transparent
+        <Inline>
+          <Button
+            iconSet="FontAwesome"
+            glyph="shopping-cart"
+            option="emphasized"
+          />
+        </Inline>
+      </Stack>
+      <Stack>
+        <Button iconSet="FontAwesome" glyph="shopping-cart">
+          Add to cart
         </Button>
-        <Button disabled type="positive" onPress={() => {}}>
-          Positive
+        <Inline>
+          <Button iconSet="FontAwesome" glyph="shopping-cart" />
+        </Inline>
+      </Stack>
+      <Stack>
+        <Button iconSet="FontAwesome" glyph="filter" option="transparent">
+          Filter
         </Button>
-        <Button disabled type="negative" onPress={() => {}}>
-          Negative
+        <Inline>
+          <Button iconSet="FontAwesome" glyph="filter" option="transparent" />
+        </Inline>
+      </Stack>
+      <Stack>
+        <Button iconSet="FontAwesome" glyph="check" type="positive">
+          Approve
         </Button>
+        <Inline>
+          <Button iconSet="FontAwesome" glyph="check" type="positive" />
+        </Inline>
+      </Stack>
+      <Stack>
+        <Button iconSet="FontAwesome" glyph="times" type="negative">
+          Reject
+        </Button>
+        <Inline>
+          <Button iconSet="FontAwesome" glyph="times" type="negative" />
+        </Inline>
       </Stack>
     </Inline>
   </Story>

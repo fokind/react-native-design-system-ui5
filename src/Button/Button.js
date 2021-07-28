@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { useThemeContext } from '../util/ThemeProvider';
 import { BUTTON_OPTIONS, BUTTON_TYPES } from '../util/constants';
 import createStyles from './styles';
+import Icon from '../Icon/Icon';
 
 const getContainerStyle = ({ theme, selected, option, type, disabled }) => {
   const containerStyles = createStyles(theme.sap_fiori_3);
-  const { button } = theme.sap_fiori_3; // TODO заменить
   const containerStyle = [containerStyles.container];
 
   if (disabled) {
@@ -56,66 +56,94 @@ const getContainerStyle = ({ theme, selected, option, type, disabled }) => {
   return containerStyle;
 };
 
-const getTextStyle = ({ theme, selected, option, type }) => {
-  const { button, fontFamily, fontSize, fontWeight } = theme.sap_fiori_3; // TODO заменить
-  const textStyle = [
-    styles.text,
-    {
-      fontSize,
-      fontWeight,
-      fontFamily,
-      color: button.textColor,
-    },
-  ];
+const getTextColorStyle = ({ theme, selected, option, type }) => {
+  const textColorStyles = createStyles(theme.sap_fiori_3);
+  const textColorStyle = [textColorStyles.textColor];
 
   switch (option) {
     case 'emphasized':
-      if (selected) {
-        textStyle.push({
-          color: button.emphasized.textColor,
-        });
-      } else {
-        textStyle.push({
-          color: button.emphasized.textColor,
-        });
-      }
+      textColorStyle.push(textColorStyles.textColorEmphasized);
       break;
     default:
       if (selected) {
-        textStyle.push({
-          color: button.selected.textColor,
-        });
+        textColorStyle.push(textColorStyles.textColorStandardPressed);
       }
       break;
   }
 
   switch (type) {
     case 'positive':
-      if (selected) {
-        textStyle.push({
-          color: button.selected.textColor,
-        });
-      } else {
-        textStyle.push({
-          color: button.accept.textColor,
-        });
-      }
+      textColorStyle.push(
+        selected
+          ? textColorStyles.textColorPositivePressed
+          : textColorStyles.textColorPositive,
+      );
       break;
     case 'negative':
-      if (selected) {
-        textStyle.push({
-          color: button.selected.textColor,
-        });
-      } else {
-        textStyle.push({
-          color: button.reject.textColor,
-        });
-      }
+      textColorStyle.push(
+        selected
+          ? textColorStyles.textColorNegativePressed
+          : textColorStyles.textColorNegative,
+      );
       break;
   }
 
+  return textColorStyle;
+};
+
+const getTextStyle = ({ theme, selected, option, type }) => {
+  const textStyles = createStyles(theme.sap_fiori_3);
+  const textStyle = [
+    textStyles.text,
+    getTextColorStyle({ theme, selected, option, type }),
+  ];
+
   return textStyle;
 };
+
+const getIconStyle = ({
+  theme,
+  isBeforeText,
+  hasText,
+  selected,
+  option,
+  type,
+}) => {
+  const iconStyles = createStyles(theme.sap_fiori_3);
+  const iconStyle = [getTextColorStyle({ theme, selected, option, type })];
+
+  if (hasText) {
+    iconStyle.push(
+      isBeforeText ? iconStyles.iconBeforeText : iconStyles.iconAfterText,
+    );
+  }
+
+  return iconStyle;
+};
+
+const renderIcon = ({
+  theme,
+  iconSet,
+  glyph,
+  isBeforeText,
+  hasText,
+  selected,
+  option,
+  type,
+}) => (
+  <Icon
+    style={StyleSheet.flatten([getIconStyle({
+      theme,
+      isBeforeText,
+      hasText,
+      selected,
+      option,
+      type,
+    })])}
+    iconSet={iconSet}
+    glyph={glyph}
+  />
+);
 
 const Button = props => {
   const theme = useThemeContext();
@@ -139,18 +167,46 @@ const Button = props => {
         }),
         props.style,
       ])}>
-      <Text
-        style={StyleSheet.flatten([
-          getTextStyle({
-            theme,
-            selected: selected || props.selected,
-            option: props.option,
-            type: props.type,
-          }),
-          props.textStyle,
-        ])}>
-        {props.children}
-      </Text>
+      {props.iconBeforeText &&
+        props.iconSet &&
+        props.glyph &&
+        renderIcon({
+          theme,
+          iconSet: props.iconSet,
+          glyph: props.glyph,
+          hasText: !!props.children,
+          iconBeforeText: props.iconBeforeText,
+          selected: selected || props.selected,
+          option: props.option,
+          type: props.type,
+        })}
+      {props.children && (
+        <Text
+          style={StyleSheet.flatten([
+            getTextStyle({
+              theme,
+              selected: selected || props.selected,
+              option: props.option,
+              type: props.type,
+            }),
+            props.textStyle,
+          ])}>
+          {props.children}
+        </Text>
+      )}
+      {!props.iconBeforeText &&
+        props.iconSet &&
+        props.glyph &&
+        renderIcon({
+          theme,
+          iconSet: props.iconSet,
+          glyph: props.glyph,
+          hasText: !!props.children,
+          iconBeforeText: props.iconBeforeText,
+          selected: selected || props.selected,
+          option: props.option,
+          type: props.type,
+        })}
     </TouchableOpacity>
   );
 };
@@ -164,6 +220,12 @@ Button.propTypes = {
   children: PropTypes.string,
   /**  Boolean value for disabled button */
   disabled: PropTypes.bool,
+  /** The icon set to include. See the icon page for the list of sets */
+  iconSet: PropTypes.string,
+  /** The icon to include. See the icon page for the list of icons */
+  glyph: PropTypes.string,
+  /** Determines whether the icon should be placed before the text */
+  iconBeforeText: PropTypes.bool,
   /**  Indicates the importance of the button: 'emphasized' or 'transparent' */
   option: PropTypes.oneOf(BUTTON_OPTIONS),
   /** Set to **true** to set state of the button to "selected" */
@@ -173,7 +235,7 @@ Button.propTypes = {
   'negative' */
   type: PropTypes.oneOf(BUTTON_TYPES),
   /**  Callback function; triggered when the button is pressed */
-  onPress: PropTypes.func.isRequired,
+  onPress: PropTypes.func,
 };
 
 const styles = StyleSheet.create({
