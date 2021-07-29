@@ -4,20 +4,13 @@ import PropTypes from 'prop-types';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import moment from 'moment';
 import CalendarNavigation from './_CalendarNavigation';
+import CalendarMonths from './_CalendarMonths';
 import CalendarItem from './_CalendarItem';
 import CalendarItemSideHelper from './_CalendarItemSideHelper';
 import { resolveFormat } from '../util/dateUtils';
 
 const handlePrevious = () => {
   console.log('handlePrevious'); // TODO:
-};
-
-const showMonths = () => {
-  console.log('showMonths'); // TODO:
-};
-
-const showYears = () => {
-  console.log('showYears'); // TODO:
 };
 
 const handleNext = () => {
@@ -123,13 +116,26 @@ const generateDays = ({
 
 const Calendar = props => {
   const [selectedDate, setSelectedDate] = useState();
+  const [showMonths, setShowMonths] = useState(false);
+  const [showYears, setShowYears] = useState(false);
+  const today = moment().startOf('day');
+  const [currentDateDisplayed, setCurrentDateDisplayed] = useState(
+    props.openToDate ? moment(props.openToDate, format) : today,
+  );
+
   const format = resolveFormat({
     dateFormat: props.dateFormat,
     locale: props.locale,
   });
-  let currentDateDisplayed = props.openToDate
-    ? moment(props.openToDate, format)
-    : moment().startOf('day');
+
+  const onMonthPress = month => {
+    const newDate = moment(currentDateDisplayed)
+      .locale(props.locale)
+      .month(month);
+
+    setCurrentDateDisplayed(newDate);
+    setShowMonths(false);
+  };
 
   const onDayPress = day => {
     setSelectedDate(day);
@@ -140,27 +146,37 @@ const Calendar = props => {
     <View
       {...props}
       style={StyleSheet.flatten([styles.container, props.style])}>
-      {/* TODO: заменить на flex */}
-      <Grid>
-        <CalendarNavigation
+      <CalendarNavigation
+        locale={props.locale}
+        currentDateDisplayed={currentDateDisplayed}
+        onNextPress={handleNext}
+        onPrevPress={handlePrevious}
+        onMonthPress={() => setShowMonths(!showMonths)}
+        onYearPress={() => setShowYears(!showYears)}
+      />
+      {showMonths && (
+        <CalendarMonths
+          currentMonth={
+            today.year() === currentDateDisplayed.year() && today.month()
+          }
           locale={props.locale}
-          currentDateDisplayed={currentDateDisplayed}
-          onNextPress={handleNext}
-          onPrevPress={handlePrevious}
-          onMonthPress={showMonths}
-          onYearPress={showYears}
+          onPress={onMonthPress}
         />
-        {generateWeekdays({
+      )}
+      {!showMonths &&
+        !showYears &&
+        generateWeekdays({
           locale: props.locale,
           weekdayStart: props.weekdayStart,
         })}
-        {generateDays({
+      {!showMonths &&
+        !showYears &&
+        generateDays({
           locale: props.locale,
           currentDateDisplayed,
           selectedDate,
           onDayPress,
         })}
-      </Grid>
     </View>
   );
 };
