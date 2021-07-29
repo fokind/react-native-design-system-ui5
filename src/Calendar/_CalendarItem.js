@@ -52,13 +52,11 @@ const CalendarItem = props => {
           current: props.current,
           isWeekend: props.isWeekend,
         }),
-        props.style,
       ])}
       onPress={props.onPress}>
       <Text
         style={StyleSheet.flatten([
           getTextStyle({ theme, isActive: props.isActive }),
-          props.textStyle,
         ])}>
         {props.children}
       </Text>
@@ -69,12 +67,7 @@ const CalendarItem = props => {
 CalendarItem.displayName = 'CalendarItem';
 
 CalendarItem.propTypes = {
-  /**  To override default style */
-  style: PropTypes.object,
-  /**  To override default text style */
-  textStyle: PropTypes.object,
-  /**  Pass button text as children as children */
-  children: PropTypes.string,
+  children: PropTypes.string.isRequired,
   otherMonth: PropTypes.bool,
   current: PropTypes.bool,
   isWeekend: PropTypes.bool,

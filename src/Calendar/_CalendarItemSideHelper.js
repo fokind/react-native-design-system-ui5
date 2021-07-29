@@ -28,10 +28,8 @@ const CalendarItemSideHelper = props => {
         getContainerStyle({
           theme,
         }),
-        props.style,
       ])}>
-      <Text
-        style={StyleSheet.flatten([getTextStyle({ theme }), props.textStyle])}>
+      <Text style={StyleSheet.flatten([getTextStyle({ theme })])}>
         {props.children}
       </Text>
     </View>
@@ -41,12 +39,7 @@ const CalendarItemSideHelper = props => {
 CalendarItemSideHelper.displayName = 'CalendarItemSideHelper';
 
 CalendarItemSideHelper.propTypes = {
-  /**  To override default style */
-  style: PropTypes.object,
-  /**  To override default text style */
-  textStyle: PropTypes.object,
-  /**  Pass button text as children as children */
-  children: PropTypes.string,
+  children: PropTypes.string.isRequired,
 };
 
 export default CalendarItemSideHelper;

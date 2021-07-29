@@ -3,53 +3,29 @@ import { View, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import moment from 'moment';
-import Button from '../Button/Button';
+import CalendarNavigation from './_CalendarNavigation';
 import CalendarItem from './_CalendarItem';
 import CalendarItemSideHelper from './_CalendarItemSideHelper';
 import { resolveFormat } from '../util/dateUtils';
 
-const handlePrevious = () => {};
-const showMonths = () => {};
-const showYears = () => {};
-const handleNext = () => {};
+const handlePrevious = () => {
+  console.log('handlePrevious'); // TODO:
+};
+
+const showMonths = () => {
+  console.log('showMonths'); // TODO:
+};
+
+const showYears = () => {
+  console.log('showYears'); // TODO:
+};
+
+const handleNext = () => {
+  console.log('handleNext'); // TODO:
+};
 
 const isWeekend = date => {
   return [0, 6].includes(date.day());
-};
-
-const generateNavigation = ({ locale, currentDateDisplayed }) => {
-  const months = moment.localeData(locale).months();
-
-  return (
-    <Row>
-      <Col style={styles.action}>
-        <Button
-          iconSet="FontAwesome"
-          glyph="chevron-left"
-          option="transparent"
-          onPress={handlePrevious}
-        />
-      </Col>
-      <Col style={styles.action}>
-        <Button option="transparent" onPress={showMonths}>
-          {months[currentDateDisplayed.month()]}
-        </Button>
-      </Col>
-      <Col style={styles.action}>
-        <Button option="transparent" onPress={showYears}>
-          {'' + currentDateDisplayed.year()}
-        </Button>
-      </Col>
-      <Col style={styles.action}>
-        <Button
-          iconSet="FontAwesome"
-          glyph="chevron-right"
-          option="transparent"
-          onPress={handleNext}
-        />
-      </Col>
-    </Row>
-  );
 };
 
 const shiftDays = (startOnDay = 0, weekdays) => {
@@ -164,8 +140,16 @@ const Calendar = props => {
     <View
       {...props}
       style={StyleSheet.flatten([styles.container, props.style])}>
+      {/* TODO: заменить на flex */}
       <Grid>
-        {generateNavigation({ locale: props.locale, currentDateDisplayed })}
+        <CalendarNavigation
+          locale={props.locale}
+          currentDateDisplayed={currentDateDisplayed}
+          onNextPress={handleNext}
+          onPrevPress={handlePrevious}
+          onMonthPress={showMonths}
+          onYearPress={showYears}
+        />
         {generateWeekdays({
           locale: props.locale,
           weekdayStart: props.weekdayStart,
