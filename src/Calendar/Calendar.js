@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
-import { useThemeContext } from '../util/ThemeProvider';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import moment from 'moment';
 import Button from '../Button/Button';
 import CalendarItem from './_CalendarItem';
 import CalendarItemSideHelper from './_CalendarItemSideHelper';
-import { isDateBetween, isDateEnabled, resolveFormat } from '../util/dateUtils';
+import { resolveFormat } from '../util/dateUtils';
 
 const handlePrevious = () => {};
 const showMonths = () => {};
@@ -20,9 +19,6 @@ const isWeekend = date => {
 
 const generateNavigation = ({ locale, currentDateDisplayed }) => {
   const months = moment.localeData(locale).months();
-  // const previousButtonLabel = showYears ? show12PreviousYears : previousMonth;
-  // const nextButtonLabel = showYears ? show12NextYears : nextMonth;
-  // const showToday = showToday && !showMonths && !showYears;
 
   return (
     <Row>
@@ -98,8 +94,12 @@ const generateWeekdays = ({ locale, weekdayStart }) => {
   );
 };
 
-const generateDays = ({ currentDateDisplayed, weekdayStart }) => {
-  const enableRangeSelection = false;
+const generateDays = ({
+  currentDateDisplayed,
+  weekdayStart,
+  selectedDate,
+  onDayPress,
+}) => {
   const todayDate = moment().startOf('day');
   const firstDayMonth = moment(currentDateDisplayed).startOf('month');
   const firstDayWeekMonth = moment(firstDayMonth)
@@ -116,16 +116,6 @@ const generateDays = ({ currentDateDisplayed, weekdayStart }) => {
 
   for (let week = 0; week < 6; week++) {
     for (let iterations = 0; iterations < 7; iterations++) {
-      // const copyDate = moment(day);
-      // const isDisabled = false; // !isDateEnabled(day, this.props);
-      // let ariaLabel = copyDate.format(
-      //   moment.localeData(locale).longDateFormat('LL'),
-      // );
-      // const specialDayType = specialDayType(day);
-      // if (isDisabled) {
-      //   ariaLabel += ' ' + moment.localeData(locale).invalidDate();
-      // }
-
       days.push(day);
       day = moment(day).add(1, 'days');
     }
@@ -142,7 +132,9 @@ const generateDays = ({ currentDateDisplayed, weekdayStart }) => {
               <CalendarItem
                 otherMonth={!d.isSame(currentDateDisplayed, 'month')}
                 current={todayDate.isSame(d)}
-                isWeekend={isWeekend(d)}>
+                isWeekend={isWeekend(d)}
+                isActive={selectedDate && selectedDate.isSame(d)}
+                onPressIn={() => onDayPress(moment(d))}>
                 {d.date().toString()}
               </CalendarItem>
             </Col>
@@ -154,7 +146,7 @@ const generateDays = ({ currentDateDisplayed, weekdayStart }) => {
 };
 
 const Calendar = props => {
-  const theme = useThemeContext();
+  const [selectedDate, setSelectedDate] = useState();
   const format = resolveFormat({
     dateFormat: props.dateFormat,
     locale: props.locale,
@@ -162,6 +154,11 @@ const Calendar = props => {
   let currentDateDisplayed = props.openToDate
     ? moment(props.openToDate, format)
     : moment().startOf('day');
+
+  const onDayPress = day => {
+    setSelectedDate(day);
+    props.onChange && props.onChange(day);
+  };
 
   return (
     <View
@@ -173,7 +170,12 @@ const Calendar = props => {
           locale: props.locale,
           weekdayStart: props.weekdayStart,
         })}
-        {generateDays({ locale: props.locale, currentDateDisplayed })}
+        {generateDays({
+          locale: props.locale,
+          currentDateDisplayed,
+          selectedDate,
+          onDayPress,
+        })}
       </Grid>
     </View>
   );
@@ -201,6 +203,17 @@ Calendar.propTypes = {
   openToDate: datePropType,
   /** Number to indicate which day the week should start. 0 = Sunday, 1 = Monday, 2 = Tuesday, 3 = Wednesday, 4 = Thursday, 5 = Friday, 6 = Saturday */
   weekdayStart: PropTypes.number,
+  /**
+   * Callback function when the date selection changes.
+   *
+   *  * If `enableRangeSelection` is **false** the function is called when any date is selected, with a Moment.js date object
+   *  * If `enableRangeSelection` is **true** the function is called when any date is selected, with an array of Moment.js date objects. The max size of this array is 2 i.e. the start and end date.
+   *
+   * @param {(Moment | Moment[])} date single Moment.js date object if range selection is disabled, else an array containing 2 Moment.js date objects.
+   * @param {Boolean} todayPressed - is true only if the change was caused by the today button.
+   * @returns {void}
+   */
+  onChange: PropTypes.func,
 };
 
 Calendar.defaultProps = {

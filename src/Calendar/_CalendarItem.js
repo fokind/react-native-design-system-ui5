@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { useThemeContext } from '../util/ThemeProvider';
@@ -40,7 +40,6 @@ const getTextStyle = ({ theme, isActive }) => {
 
 const CalendarItem = props => {
   const theme = useThemeContext();
-  const [isSelected, setIsSelected] = useState(false);
 
   return (
     <TouchableOpacity
@@ -48,17 +47,17 @@ const CalendarItem = props => {
       style={StyleSheet.flatten([
         getItemStyle({
           theme,
-          isActive: isSelected,
+          isActive: props.isActive,
           otherMonth: props.otherMonth,
           current: props.current,
           isWeekend: props.isWeekend,
         }),
         props.style,
       ])}
-      onPress={() => setIsSelected(true)}>
+      onPress={props.onPress}>
       <Text
         style={StyleSheet.flatten([
-          getTextStyle({ theme, isActive: isSelected }),
+          getTextStyle({ theme, isActive: props.isActive }),
           props.textStyle,
         ])}>
         {props.children}
@@ -79,6 +78,8 @@ CalendarItem.propTypes = {
   otherMonth: PropTypes.bool,
   current: PropTypes.bool,
   isWeekend: PropTypes.bool,
+  isActive: PropTypes.bool,
+  onPress: PropTypes.func,
 };
 
 export default CalendarItem;
