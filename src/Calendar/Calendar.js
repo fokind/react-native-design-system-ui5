@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
-import { Col, Row, Grid } from 'react-native-easy-grid';
+import { Col, Row } from 'react-native-easy-grid';
 import moment from 'moment';
 import CalendarNavigation from './_CalendarNavigation';
 import CalendarMonths from './_CalendarMonths';
+import CalendarYears from './_CalendarYears';
 import CalendarItem from './_CalendarItem';
 import CalendarItemSideHelper from './_CalendarItemSideHelper';
 import { resolveFormat } from '../util/dateUtils';
@@ -119,14 +120,15 @@ const Calendar = props => {
   const [showMonths, setShowMonths] = useState(false);
   const [showYears, setShowYears] = useState(false);
   const today = moment().startOf('day');
-  const [currentDateDisplayed, setCurrentDateDisplayed] = useState(
-    props.openToDate ? moment(props.openToDate, format) : today,
-  );
 
   const format = resolveFormat({
     dateFormat: props.dateFormat,
     locale: props.locale,
   });
+
+  const [currentDateDisplayed, setCurrentDateDisplayed] = useState(
+    props.openToDate ? moment(props.openToDate, format) : today,
+  );
 
   const onMonthPress = month => {
     const newDate = moment(currentDateDisplayed)
@@ -135,6 +137,15 @@ const Calendar = props => {
 
     setCurrentDateDisplayed(newDate);
     setShowMonths(false);
+  };
+
+  const onYearPress = year => {
+    const newDate = moment(currentDateDisplayed)
+      .locale(props.locale)
+      .year(year);
+
+    setCurrentDateDisplayed(newDate);
+    setShowYears(false);
   };
 
   const onDayPress = day => {
@@ -151,16 +162,26 @@ const Calendar = props => {
         currentDateDisplayed={currentDateDisplayed}
         onNextPress={handleNext}
         onPrevPress={handlePrevious}
-        onMonthPress={() => setShowMonths(!showMonths)}
-        onYearPress={() => setShowYears(!showYears)}
+        onMonthPress={() => {
+          setShowYears(false);
+          setShowMonths(!showMonths);
+        }}
+        onYearPress={() => {
+          setShowMonths(false);
+          setShowYears(!showYears);
+        }}
       />
       {showMonths && (
         <CalendarMonths
-          currentMonth={
-            today.year() === currentDateDisplayed.year() && today.month()
-          }
+          currentDateDisplayed={currentDateDisplayed}
           locale={props.locale}
           onPress={onMonthPress}
+        />
+      )}
+      {showYears && (
+        <CalendarYears
+          currentDateDisplayed={currentDateDisplayed}
+          onPress={onYearPress}
         />
       )}
       {!showMonths &&

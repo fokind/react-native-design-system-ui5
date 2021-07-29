@@ -4,12 +4,11 @@ import moment from 'moment';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import CalendarItem from './_CalendarItem';
 
-const CalendarMonths = props => {
-  const months = moment.localeData(props.locale).monthsShort();
+const CalendarYears = props => {
   const rows = [0, 1, 2];
   const cols = [0, 1, 2, 3];
-  const currentYear = moment().year() === props.currentDateDisplayed.year();
-  const todayMonth = moment().month();
+  const currentYearDisplayed = props.currentDateDisplayed.year();
+  const todayYear = moment().year();
 
   return (
     <Grid>
@@ -18,9 +17,11 @@ const CalendarMonths = props => {
           {cols.map(col => (
             <Col key={col}>
               <CalendarItem
-                current={currentYear && todayMonth === col + row * 4}
-                onPress={() => props.onPress(col + row * 4)}>
-                {months[col + row * 4]}
+                current={todayYear === currentYearDisplayed + col + row * 4}
+                onPress={() =>
+                  props.onPress(currentYearDisplayed + col + row * 4)
+                }>
+                {'' + (currentYearDisplayed + col + row * 4)}
               </CalendarItem>
             </Col>
           ))}
@@ -30,12 +31,11 @@ const CalendarMonths = props => {
   );
 };
 
-CalendarMonths.displayName = 'CalendarMonths';
+CalendarYears.displayName = 'CalendarYears';
 
-CalendarMonths.propTypes = {
-  locale: PropTypes.string.isRequired,
+CalendarYears.propTypes = {
   currentDateDisplayed: PropTypes.instanceOf(moment).isRequired,
   onPress: PropTypes.func.isRequired,
 };
 
-export default CalendarMonths;
+export default CalendarYears;
