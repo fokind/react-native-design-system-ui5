@@ -57,7 +57,7 @@ const Calendar = props => {
   return (
     <View
       {...props}
-      style={StyleSheet.flatten([styles.container, props.style])}>
+      style={StyleSheet.flatten([props.style])}>
       <CalendarNavigation
         locale={props.locale}
         currentDateDisplayed={currentDateDisplayed}
@@ -107,8 +107,6 @@ Calendar.propTypes = {
   dateFormat: PropTypes.string,
   /**  Moment.js locale keys */
   locale: PropTypes.string,
-  /** Number to indicate which day the week should start. 0 = Sunday, 1 = Monday, 2 = Tuesday, 3 = Wednesday, 4 = Thursday, 5 = Friday, 6 = Saturday */
-  weekdayStart: PropTypes.number,
   /**
    * Callback function when the date selection changes. The function is called when any date is selected, with a Moment.js date object
    *
@@ -119,15 +117,7 @@ Calendar.propTypes = {
 };
 
 Calendar.defaultProps = {
-  locale: 'ru',
-  weekdayStart: 0,
+  locale: 'en',
 };
-
-const styles = StyleSheet.create({
-  navigation: {
-    flexDirection: 'row',
-  },
-  container: {},
-});
 
 export default Calendar;
