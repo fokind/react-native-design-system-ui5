@@ -10,25 +10,21 @@ const CalendarYears = props => {
 
   return (
     <Grid>
-      {Array(3)
-        .keys()
-        .map(row => (
-          <Row key={row}>
-            {Array(4)
-              .keys()
-              .map(col => (
-                <Col key={col}>
-                  <CalendarItem
-                    current={todayYear === currentYearDisplayed + col + row * 4}
-                    onPress={() =>
-                      props.onPress(currentYearDisplayed + col + row * 4)
-                    }>
-                    {'' + (currentYearDisplayed + col + row * 4)}
-                  </CalendarItem>
-                </Col>
-              ))}
-          </Row>
-        ))}
+      {[...Array(3).keys()].map(row => (
+        <Row key={row}>
+          {[...Array(4).keys()].map(col => (
+            <Col key={col}>
+              <CalendarItem
+                current={todayYear === currentYearDisplayed + col + row * 4}
+                onPress={() =>
+                  props.onPress(currentYearDisplayed + col + row * 4)
+                }>
+                {'' + (currentYearDisplayed + col + row * 4)}
+              </CalendarItem>
+            </Col>
+          ))}
+        </Row>
+      ))}
     </Grid>
   );
 };

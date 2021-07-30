@@ -8,20 +8,28 @@ import CalendarMonths from './_CalendarMonths';
 import CalendarYears from './_CalendarYears';
 import CalendarWeekdays from './_CalendarWeekdays';
 
-const handlePrevious = () => {
-  console.log('handlePrevious'); // TODO:
-};
-
-const handleNext = () => {
-  console.log('handleNext'); // TODO:
-};
-
 const Calendar = props => {
   const [selectedDate, setSelectedDate] = useState();
   const [showMonths, setShowMonths] = useState(false);
   const [showYears, setShowYears] = useState(false);
   const today = moment().startOf('day');
   const [currentDateDisplayed, setCurrentDateDisplayed] = useState(today);
+
+  const handlePrevious = () => {
+    setCurrentDateDisplayed(
+      showYears
+        ? moment(currentDateDisplayed).add(-12, 'year')
+        : moment(currentDateDisplayed).add(-1, 'month'),
+    );
+  };
+
+  const handleNext = () => {
+    setCurrentDateDisplayed(
+      showYears
+        ? moment(currentDateDisplayed).add(12, 'year')
+        : moment(currentDateDisplayed).add(1, 'month'),
+    );
+  };
 
   const onMonthPress = month => {
     const newDate = moment(currentDateDisplayed)

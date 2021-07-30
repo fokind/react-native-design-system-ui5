@@ -1,41 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Col, Row } from 'react-native-easy-grid';
+import { Col, Row, Grid } from 'react-native-easy-grid';
 import Button from '../Button/Button';
 
 const CalendarNavigation = props => {
   const months = moment.localeData(props.locale).months();
 
   return (
-    <Row>
-      <Col>
-        <Button
-          iconSet="FontAwesome"
-          glyph="chevron-left"
-          option="transparent"
-          onPress={props.onPrevPress}
-        />
-      </Col>
-      <Col>
-        <Button option="transparent" onPress={props.onMonthPress}>
-          {months[props.currentDateDisplayed.month()]}
-        </Button>
-      </Col>
-      <Col>
-        <Button option="transparent" onPress={props.onYearPress}>
-          {'' + props.currentDateDisplayed.year()}
-        </Button>
-      </Col>
-      <Col>
-        <Button
-          iconSet="FontAwesome"
-          glyph="chevron-right"
-          option="transparent"
-          onPress={props.onNextPress}
-        />
-      </Col>
-    </Row>
+    <Grid>
+      <Row>
+        <Col>
+          <Button
+            iconSet="FontAwesome"
+            glyph="chevron-left"
+            option="transparent"
+            onPress={props.onPrevPress}
+          />
+        </Col>
+        <Col>
+          <Button option="transparent" onPress={props.onMonthPress}>
+            {months[props.currentDateDisplayed.month()]}
+          </Button>
+        </Col>
+        <Col>
+          <Button option="transparent" onPress={props.onYearPress}>
+            {'' + props.currentDateDisplayed.year()}
+          </Button>
+        </Col>
+        <Col>
+          <Button
+            iconSet="FontAwesome"
+            glyph="chevron-right"
+            option="transparent"
+            onPress={props.onNextPress}
+          />
+        </Col>
+      </Row>
+    </Grid>
   );
 };
 

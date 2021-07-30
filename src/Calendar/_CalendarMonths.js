@@ -6,16 +6,14 @@ import CalendarItem from './_CalendarItem';
 
 const CalendarMonths = props => {
   const months = moment.localeData(props.locale).monthsShort();
-  const rows = [0, 1, 2];
-  const cols = [0, 1, 2, 3];
   const currentYear = moment().year() === props.currentDateDisplayed.year();
   const todayMonth = moment().month();
 
   return (
     <Grid>
-      {rows.map(row => (
+      {[...Array(3).keys()].map(row => (
         <Row key={row}>
-          {cols.map(col => (
+          {[...Array(4).keys()].map(col => (
             <Col key={col}>
               <CalendarItem
                 current={currentYear && todayMonth === col + row * 4}

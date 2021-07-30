@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Col, Row } from 'react-native-easy-grid';
+import { Col, Row, Grid } from 'react-native-easy-grid';
 import CalendarItem from './_CalendarItem';
 
 const isWeekend = date => {
@@ -11,7 +11,9 @@ const isWeekend = date => {
 const CalendarDays = props => {
   const todayDate = moment().startOf('day');
   const firstDayMonth = moment(props.currentDateDisplayed).startOf('month');
-  const firstDayWeekMonth = moment(firstDayMonth).locale(props.locale).startOf('week');
+  const firstDayWeekMonth = moment(firstDayMonth)
+    .locale(props.locale)
+    .startOf('week');
   const isAfterFirstDayMonth = moment(firstDayWeekMonth).isAfter(firstDayMonth);
   const rows = [];
 
@@ -30,7 +32,7 @@ const CalendarDays = props => {
     days = [];
   }
   return (
-    <>
+    <Grid>
       {rows.map((r, i) => (
         <Row key={i}>
           {r.map((d, k) => (
@@ -47,7 +49,7 @@ const CalendarDays = props => {
           ))}
         </Row>
       ))}
-    </>
+    </Grid>
   );
 };
 

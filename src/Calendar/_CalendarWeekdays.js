@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Col, Row } from 'react-native-easy-grid';
+import { Col, Row, Grid } from 'react-native-easy-grid';
 import CalendarItemSideHelper from './_CalendarItemSideHelper';
 
 const CalendarWeekdays = props => {
@@ -9,13 +9,15 @@ const CalendarWeekdays = props => {
   const weekDays = moment.weekdaysMin(true);
 
   return (
-    <Row>
-      {weekDays.map((value, index) => (
-        <Col key={index}>
-          <CalendarItemSideHelper>{value}</CalendarItemSideHelper>
-        </Col>
-      ))}
-    </Row>
+    <Grid>
+      <Row>
+        {weekDays.map((value, index) => (
+          <Col key={index}>
+            <CalendarItemSideHelper>{value}</CalendarItemSideHelper>
+          </Col>
+        ))}
+      </Row>
+    </Grid>
   );
 };
 
