@@ -103,8 +103,6 @@ Calendar.displayName = 'Calendar';
 Calendar.propTypes = {
   /**  To override default style */
   style: PropTypes.object,
-  /** Format to use for displaying the inputted or selected date. E.g. "YYYY.M.D", "DD-MM-YYYY", "MM/DD/YYYY" etc. This overrides the date format derived from any set locale. */
-  dateFormat: PropTypes.string,
   /**  Moment.js locale keys */
   locale: PropTypes.string,
   /**
