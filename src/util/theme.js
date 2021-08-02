@@ -7,6 +7,16 @@ const theme = {
     fontSmallSize: 12,
     textColor: '#32363a',
     fontWeight: '400',
+    accentColor1: '#d08014',
+    accentColor2: '#d04343',
+    accentColor3: '#db1f77',
+    accentColor4: '#c0399f',
+    accentColor5: '#6367de',
+    accentColor6: '#286eb4',
+    accentColor7: '#0f828f',
+    accentColor8: '#7ca10c',
+    accentColor9: '#925ace',
+    accentColor10: '#647987',
     button: {
       borderWidth: 1,
       borderCornerRadius: 4,
@@ -68,6 +78,7 @@ const theme = {
     },
     content: {
       labelColor: '#6a6d70',
+      contrastTextColor: '#fff',
       selected: {
         background: '#0854a0',
         textColor: '#fff',
