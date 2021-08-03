@@ -1,5 +1,5 @@
 export * from './Avatar';
-export * from './Badge';
+export * from './Counter';
 export * from './Button';
 export * from './Forms';
 export * from './Calendar';

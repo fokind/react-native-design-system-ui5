@@ -83,6 +83,7 @@ const theme = {
         background: '#0854a0',
         textColor: '#fff',
       },
+      badgeBackground: '#d04343',
     },
     legend: {
       workingBackground: '#fafafa',
@@ -91,6 +92,9 @@ const theme = {
     },
     list: {
       background: '#fff',
+    },
+    shell: {
+      textColor: '#fff',
     },
   },
   fontSize: {

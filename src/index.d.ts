@@ -12,7 +12,7 @@ export * from './types/FormInput';
 export * from './types/FormItem';
 export * from './types/FormLabel';
 export * from './types/Avatar';
-export * from './types/Badge';
+export * from './types/Counter';
 export * from './types/CheckBox';
 export * from './types/FullScreenLoader';
 export * from './types/Header';
