@@ -8,7 +8,7 @@ const testIsEmpty = value => value === undefined || value?.length === 0;
 
 const getInputStyle = ({ isEmpty, theme }) => {
   const inputStyles = createStyles(theme.sap_fiori_3);
-  const inputStyle = [styles.input, inputStyles.input];
+  const inputStyle = [inputStyles.input];
 
   if (isEmpty) {
     inputStyle.push(inputStyles.inputEmpty);
@@ -51,16 +51,5 @@ FormInput.defaultProps = {
   placeholder: '',
   value: '',
 };
-
-const styles = StyleSheet.create({
-  input: {
-    marginVertical: 4,
-    lineHeight: 19.6,
-    fontWeight: '400',
-    height: 36,
-    paddingHorizontal: 10,
-    minWidth: 44,
-  },
-});
 
 export default FormInput;
