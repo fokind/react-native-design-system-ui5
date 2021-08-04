@@ -2,34 +2,17 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 import PropTypes from 'prop-types';
 import { useThemeContext } from '../util/ThemeProvider';
+import createStyles from './styles';
 
 const testIsEmpty = value => value === undefined || value?.length === 0;
 
 const getInputStyle = ({ isEmpty, theme }) => {
-  const { fontFamily, fontSize, field } = theme.sap_fiori_3; // TODO заменить
-  const {
-    textColor,
-    background,
-    borderWidth,
-    borderColor,
-    borderCornerRadius,
-  } = field;
-  const inputStyle = [
-    styles.input,
-    {
-      color: textColor,
-      backgroundColor: background,
-      borderWidth,
-      borderColor,
-      borderRadius: borderCornerRadius,
-      fontSize,
-      fontFamily,
-    },
-  ];
+  const inputStyles = createStyles(theme.sap_fiori_3);
+  const inputStyle = [styles.input, inputStyles.input];
 
-  inputStyle.push({
-    fontStyle: isEmpty ? 'italic' : 'normal',
-  });
+  if (isEmpty) {
+    inputStyle.push(inputStyles.inputEmpty);
+  }
 
   return inputStyle;
 };

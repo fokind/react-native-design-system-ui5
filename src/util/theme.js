@@ -74,7 +74,7 @@ const theme = {
       borderColor: '#89919a',
       helpBackground: '#fff',
       borderWidth: 1,
-      borderCornerRadius: 4,
+      borderCornerRadius: 2,
       requiredColor: '#ce3b3b',
       warningColor: '#df6e0c',
       invalidColor: '#bb0000',
@@ -82,6 +82,7 @@ const theme = {
       informationColor: '#0a6ed1',
     },
     content: {
+      lineHeight: 19.6,
       labelColor: '#6a6d70',
       contrastTextColor: '#fff',
       selected: {
