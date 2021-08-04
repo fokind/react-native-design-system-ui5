@@ -17,6 +17,7 @@ const theme = {
     accentColor8: '#7ca10c',
     accentColor9: '#925ace',
     accentColor10: '#647987',
+    selectedColor: '#0854a0',
     button: {
       borderWidth: 1,
       borderCornerRadius: 4,
@@ -75,6 +76,10 @@ const theme = {
       borderWidth: 1,
       borderCornerRadius: 4,
       requiredColor: '#ce3b3b',
+      warningColor: '#df6e0c',
+      invalidColor: '#bb0000',
+      successColor: '#107e3e',
+      informationColor: '#0a6ed1',
     },
     content: {
       labelColor: '#6a6d70',

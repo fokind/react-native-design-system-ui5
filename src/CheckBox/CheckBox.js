@@ -1,82 +1,100 @@
-import React from 'react';
-import { View, TouchableOpacity, TouchableNativeFeedback, Platform, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useThemeContext } from '../util/ThemeProvider';
+import { FORM_MESSAGE_TYPES } from '../util/constants';
+import createStyles from './styles';
 
-const getTextStyle = ({ theme, size, textColor, iconRight }) => {
-  const textStyle = [{
-    fontSize: theme.fontSize[size],
-    color: theme.textColor[textColor],
-    marginLeft: 5,
-  }];
-  if (iconRight) {
-    textStyle.push({
-      marginLeft: 0,
-      marginRight: 5,
-    });
-  }
+const getTextStyle = ({ theme }) => {
+  const textStyles = createStyles(theme.sap_fiori_3);
+  const textStyle = [textStyles.text];
+
   return textStyle;
 };
 
-const renderIcon = ({ style, theme, size, color, ...props }) => {
-  if (props.checked) {
-    return (
-      props.checkedIcon ||
-      <MaterialIcons
-        name="check-box"
-        size={theme.fontSize[size] * 1.5}
-        color={theme.brandColor[color]}
-      />
-    );
-  } else {
-    return (
-      props.uncheckedIcon ||
-      <MaterialIcons
-        name="check-box-outline-blank"
-        size={theme.fontSize[size] * 1.5}
-        color={theme.brandColor[color]}
-      />
-    );
+const getIconStyle = ({ theme, state }) => {
+  const iconStyles = createStyles(theme.sap_fiori_3);
+  const iconStyle = [iconStyles.icon];
+
+  switch (state) {
+    case 'warning':
+      iconStyle.push(iconStyles.iconWarning);
+      break;
+    case 'error':
+      iconStyle.push(iconStyles.iconError);
+      break;
+    case 'success':
+      iconStyle.push(iconStyles.iconSuccess);
+      break;
+    case 'information':
+      iconStyle.push(iconStyles.iconInformation);
+      break;
   }
+
+  return iconStyle;
 };
 
-const CheckBox = ({ style, textStyle, ...props }) => {
-  const theme = useThemeContext();
-  const propsWithTheme = { ...props, theme };
-  const TouchableElement =
-    Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
+const renderIcon = ({ theme, state, checked }) => {
   return (
-    <TouchableElement {...props} disabled={props.disabled} onPress={props.onPress}>
-      <View style={StyleSheet.flatten([styles.container, style])}>
-        {!props.iconRight && renderIcon(propsWithTheme)}
-        <Text style={StyleSheet.flatten([getTextStyle(propsWithTheme), textStyle])}>
-          {props.children}
-        </Text>
-        {props.iconRight && renderIcon(propsWithTheme)}
-      </View>
-    </TouchableElement>
+    <MaterialIcons
+      style={StyleSheet.flatten([getIconStyle({ theme, state })])}
+      name={checked ? 'check-box' : 'check-box-outline-blank'}
+      size={24}
+    />
   );
 };
 
-CheckBox.propTypes = {
-  style: PropTypes.object,
-  textStyle: PropTypes.object,
-  children: PropTypes.string.isRequired,
-  checked: PropTypes.bool,
-  iconRight: PropTypes.bool,
-  color: PropTypes.string,
-  textColor: PropTypes.string,
-  size: PropTypes.oneOf(['xxsmall', 'xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge']),
-  onPress: PropTypes.func.isRequired,
-  checkedIcon: PropTypes.element,
-  uncheckedIcon: PropTypes.element,
+const CheckBox = props => {
+  const theme = useThemeContext();
+  const [checked, setChecked] = useState(!!props.checked);
+
+  const onPress = () => {
+    const newChecked = !checked;
+    setChecked(newChecked);
+    props.onChange && props.onChange(newChecked);
+  };
+
+  return (
+    <TouchableOpacity {...props} disabled={props.disabled} onPress={onPress}>
+      <View style={StyleSheet.flatten([styles.container, props.style])}>
+        {renderIcon({
+          theme,
+          state: props.validationState,
+          checked,
+        })}
+        <Text
+          style={StyleSheet.flatten([
+            getTextStyle({ theme }),
+            props.textStyle,
+          ])}>
+          {props.children}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
 };
 
-CheckBox.defaultProps = {
-  size: 'medium',
-  color: 'primary',
-  textColor: 'default',
+CheckBox.displayName = 'CheckBox';
+
+CheckBox.propTypes = {
+  /**  To override default style */
+  style: PropTypes.object,
+  /**  To override default text style */
+  textStyle: PropTypes.object,
+  /** Node(s) to render within the component */
+  children: PropTypes.string.isRequired,
+  /** Set to **true** when the checkbox is checked */
+  checked: PropTypes.bool,
+  /** State of validation: 'error', 'warning', 'information', 'success' */
+  validationState: PropTypes.string,
+  /**
+   * Callback function; triggered when the change event fires on the HTML checkbox `<input>`.
+   *
+   * @param {Boolean} checkedState - represents the final checked state of the HTML checkbox input.
+   * @returns {void}
+   */
+  onChange: PropTypes.func,
 };
 
 const styles = StyleSheet.create({
