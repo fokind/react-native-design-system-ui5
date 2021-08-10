@@ -51,19 +51,6 @@ const getContainerStyle = ({ theme, circle, size, transparent }) => {
   return avatarStyle;
 };
 
-const getEditIconStyle = ({ theme, size }) => {
-  const iconStyle = [
-    styles.editView,
-    {
-      width: theme.avatarSize[size] / 4,
-      height: theme.avatarSize[size] / 4,
-      borderRadius: theme.avatarSize[size] / 8,
-      backgroundColor: theme.brandColor.disabled,
-    },
-  ];
-  return iconStyle;
-};
-
 const getTextStyle = ({ theme, size, transparent }) => {
   const textStyles = createStyles(theme.sap_fiori_3);
   const textStyle = [textStyles.text];
@@ -98,16 +85,13 @@ const getIconStyle = ({ theme, size, transparent }) => {
 
 const Avatar = props => {
   const theme = useThemeContext();
-  const TouchableElement =
-    Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
 
   return (
     <View
       style={StyleSheet.flatten([
         styles.propView,
-        { width: theme.avatarSize[props.size] },
       ])}>
-      <TouchableElement disabled={!props.editable} {...props}>
+      <TouchableOpacity disabled={!props.editable} {...props}>
         <View
           style={StyleSheet.flatten([
             getContainerStyle({ ...props, theme }),
@@ -147,20 +131,7 @@ const Avatar = props => {
             </Text>
           )}
         </View>
-      </TouchableElement>
-      {props.editable && (
-        <View
-          style={StyleSheet.flatten([
-            getEditIconStyle({ ...props, theme }),
-            props.editIconStyle,
-          ])}>
-          <Feather
-            name="edit-2"
-            size={theme.avatarSize[props.size] / 8}
-            color={props.editIconColor || theme.textColor.disabled}
-          />
-        </View>
-      )}
+      </TouchableOpacity>
     </View>
   );
 };
