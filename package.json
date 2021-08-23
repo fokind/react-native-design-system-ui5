@@ -1,6 +1,6 @@
 {
   "name": "react-native-fundamental",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A reusabale component library and design rules for react-native.",
   "main": "src/index.js",
   "scripts": {
