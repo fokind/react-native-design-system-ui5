@@ -1,0 +1,53 @@
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import {
+  withKnobs,
+  select,
+  number,
+  boolean,
+  color,
+} from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
+import Inline from '../Layout/Inline';
+import Feather from 'react-native-vector-icons/Feather';
+import Counter from './Counter';
+
+<Meta title="Counter" component={Counter} />
+
+# Counter
+
+```js
+import { Counter } from 'react-native-fundmental';
+```
+
+Status Indicators are used to easily highlight the state of an object.
+
+# Examples
+
+## Primary
+
+<Preview>
+  <Story name="primary">
+    <Inline>
+     <Counter>5</Counter>
+    </Inline>
+  </Story>
+</Preview>
+
+## Default Counter
+
+Counter has a minimum value 1. Maximum display is 999+.
+
+<Preview>
+  <Story name="default counter">
+    <Inline>
+      <Counter>5</Counter>
+      <Counter>25</Counter>
+      <Counter>101</Counter>
+      <Counter>999+</Counter>
+    </Inline>
+  </Story>
+</Preview>
+
+# Properties
+
+<Props of={Counter} />

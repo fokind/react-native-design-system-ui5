@@ -1,9 +1,6 @@
 module.exports = {
     stories: [
-        '../guides/GetStarted.stories.mdx',
-        '../guides/DesignRules.stories.mdx',
-        '../guides/Theme.stories.mdx',
-        '../guides/Colors.stories.mdx',
+        '../guides/Overview.stories.mdx',
         '../src/**/*.stories.@(js|mdx)'
     ],
     addons: [

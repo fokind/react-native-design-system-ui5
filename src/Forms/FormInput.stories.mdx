@@ -1,0 +1,28 @@
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { withKnobs, select, boolean } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
+import FormInput from './FormInput';
+
+<Meta title="FormInput" component={FormInput} />
+
+# FormInput
+
+```js
+import { FormInput } from 'react-native-fundmental';
+```
+
+A **FormInput** is used to collect data from the user. When a field is required, the \`required\` property will include an asterisk (\*).
+
+# Examples
+
+## Primary
+
+<Preview>
+  <Story name="primary">
+    <FormInput placeholder="Field placeholder text" />
+  </Story>
+</Preview>
+
+# Properties
+
+<Props of={FormInput} />

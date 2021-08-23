@@ -1,123 +1,217 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, TouchableNativeFeedback, Platform, StyleSheet, ActivityIndicator } from 'react-native';
+import React, { useState } from 'react';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { useThemeContext } from '../util/ThemeProvider';
+import { BUTTON_OPTIONS, BUTTON_TYPES } from '../util/constants';
+import createStyles from './styles';
+import Icon from '../Icon/Icon';
 
-const getTextStyle = ({ size, outline, transparent, loading, disabled, theme, color }) => {
-  const textStyle = [{
-    fontWeight: Platform.OS === 'android' ? 'bold' : '400',
-    fontSize: theme.fontSize[size],
-    margin: theme.buttonSize[size],
-    color: theme.textColor.white,
-  }];
-  if (outline || transparent) {
-    textStyle.push({
-      color: theme.brandColor[color],
-    });
-  }
-  if (loading && outline) {
-    textStyle.push({
-      color: theme.brandColor[color] + '50',
-    });
-  }
+const getContainerStyle = ({ theme, selected, option, type, disabled }) => {
+  const containerStyles = createStyles(theme.sap_fiori_3);
+  const containerStyle = [containerStyles.container];
+
   if (disabled) {
-    textStyle.push({
-      color: theme.textColor.disabled,
-    });
+    containerStyle.push(containerStyles.containerDisabled);
   }
+
+  switch (option) {
+    case 'emphasized':
+      containerStyle.push(
+        selected
+          ? containerStyles.containerEmphasizedPressed
+          : containerStyles.containerEmphasized,
+      );
+      break;
+    case 'transparent':
+      containerStyle.push(
+        selected
+          ? containerStyles.containerTransparentPressed
+          : containerStyles.containerTransparent,
+      );
+      break;
+    default:
+      if (selected) {
+        containerStyle.push(containerStyles.containerStandardPressed);
+      }
+      break;
+  }
+
+  switch (type) {
+    case 'positive':
+      containerStyle.push(
+        selected
+          ? containerStyles.containerPositivePressed
+          : containerStyles.containerPositive,
+      );
+      break;
+    case 'negative':
+      containerStyle.push(
+        selected
+          ? containerStyles.containerNegativePressed
+          : containerStyles.containerNegative,
+      );
+      break;
+  }
+
+  return containerStyle;
+};
+
+const getTextColorStyle = ({ theme, selected, option, type }) => {
+  const textColorStyles = createStyles(theme.sap_fiori_3);
+  const textColorStyle = [textColorStyles.textColor];
+
+  switch (option) {
+    case 'emphasized':
+      textColorStyle.push(textColorStyles.textColorEmphasized);
+      break;
+    default:
+      if (selected) {
+        textColorStyle.push(textColorStyles.textColorStandardPressed);
+      }
+      break;
+  }
+
+  switch (type) {
+    case 'positive':
+      textColorStyle.push(
+        selected
+          ? textColorStyles.textColorPositivePressed
+          : textColorStyles.textColorPositive,
+      );
+      break;
+    case 'negative':
+      textColorStyle.push(
+        selected
+          ? textColorStyles.textColorNegativePressed
+          : textColorStyles.textColorNegative,
+      );
+      break;
+  }
+
+  return textColorStyle;
+};
+
+const getTextStyle = ({ theme, selected, option, type }) => {
+  const textStyles = createStyles(theme.sap_fiori_3);
+  const textStyle = [
+    textStyles.text,
+    getTextColorStyle({ theme, selected, option, type }),
+  ];
+
   return textStyle;
 };
 
-const getContainerStyle = (props) => {
-  const { outline, width, round, transparent, disabled, loading, size, length, theme, color, tint } = props;
-  const buttonStyles = [styles.container];
-  buttonStyles.push({
-    backgroundColor: theme.brandColor[color],
-    borderWidth: 1,
-    borderColor: theme.brandColor[color],
-  });
-  if (length === 'short') {
-    buttonStyles.push({
-      width: theme.buttonWidth[width],
-    });
+const getIconStyle = ({
+  theme,
+  isBeforeText,
+  hasText,
+  selected,
+  option,
+  type,
+}) => {
+  const iconStyles = createStyles(theme.sap_fiori_3);
+  const iconStyle = [getTextColorStyle({ theme, selected, option, type })];
+
+  if (hasText) {
+    iconStyle.push(
+      isBeforeText ? iconStyles.iconBeforeText : iconStyles.iconAfterText,
+    );
   }
-  if (round) {
-    buttonStyles.push({
-      borderRadius: theme.buttonSize[size] * 2,
-    });
-  }
-  if (outline) {
-    buttonStyles.push({
-      backgroundColor: theme.brandColor[color] + (tint ? '10' : '00'),
-    });
-  }
-  if (loading) {
-    buttonStyles.push({
-      borderWidth: 0,
-      backgroundColor: theme.brandColor[color] + '50',
-    });
-  }
-  if (transparent) {
-    buttonStyles.push({
-      borderWidth: 0,
-      backgroundColor: 'transparent',
-    });
-  }
-  if (loading && outline) {
-    buttonStyles.push({
-      backgroundColor: theme.brandColor[color] + '20',
-      borderWidth: StyleSheet.hairlineWidth,
-      borderColor: theme.brandColor[color] + '30',
-    });
-  }
-  if (disabled) {
-    buttonStyles.push({
-      backgroundColor: theme.brandColor.disabled,
-      borderColor: theme.textColor.disabled,
-    });
-  }
-  return buttonStyles;
+
+  return iconStyle;
 };
 
+const renderIcon = ({
+  theme,
+  iconSet,
+  glyph,
+  isBeforeText,
+  hasText,
+  selected,
+  option,
+  type,
+}) => (
+  <Icon
+    style={StyleSheet.flatten([getIconStyle({
+      theme,
+      isBeforeText,
+      hasText,
+      selected,
+      option,
+      type,
+    })])}
+    iconSet={iconSet}
+    glyph={glyph}
+  />
+);
 
-const renderChildren = (props) => {
-  return (
-    <>
-      {props.loading && !props.disabled &&
-        <ActivityIndicator
-          style={styles.iconStyle}
-          color={props.indicatorColor || props.theme.brandColor[props.color]} />}
-      {props.leftIcon || props.icon &&
-        <View style={styles.iconStyle}>
-          {props.leftIcon || props.icon}
-        </View>}
-      <Text style={StyleSheet.flatten([getTextStyle(props), props.textStyle])}>
-        {props.children}
-      </Text>
-      {props.rightIcon &&
-        <View style={styles.iconStyle}>
-          {props.rightIcon}
-        </View>}
-    </>
-  );
-};
-
-const Button = (props) => {
+const Button = props => {
   const theme = useThemeContext();
-  const TouchableElement =
-    Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
+  const [selected, setSelected] = useState(false);
+
   return (
-    <TouchableElement
+    <TouchableOpacity
       {...props}
+      onPressIn={() => setSelected(true)}
+      onPressOut={() => setSelected(false)}
       onPress={props.onPress}
-      disabled={props.disabled || props.loading}
-    >
-      <View style={StyleSheet.flatten([getContainerStyle({ ...props, theme }), props.style])}>
-        {renderChildren({ ...props, theme })}
-      </View>
-    </TouchableElement>
+      disabled={props.disabled}
+      activeOpacity={1}
+      style={StyleSheet.flatten([
+        getContainerStyle({
+          theme,
+          selected: selected || props.selected,
+          option: props.option,
+          type: props.type,
+          disabled: props.disabled,
+        }),
+        props.style,
+      ])}>
+      {props.iconBeforeText &&
+        props.iconSet &&
+        props.glyph &&
+        renderIcon({
+          theme,
+          iconSet: props.iconSet,
+          glyph: props.glyph,
+          hasText: !!props.children,
+          iconBeforeText: props.iconBeforeText,
+          selected: selected || props.selected,
+          option: props.option,
+          type: props.type,
+        })}
+      {props.children && (
+        <Text
+          style={StyleSheet.flatten([
+            getTextStyle({
+              theme,
+              selected: selected || props.selected,
+              option: props.option,
+              type: props.type,
+            }),
+            props.textStyle,
+          ])}>
+          {props.children}
+        </Text>
+      )}
+      {!props.iconBeforeText &&
+        props.iconSet &&
+        props.glyph &&
+        renderIcon({
+          theme,
+          iconSet: props.iconSet,
+          glyph: props.glyph,
+          hasText: !!props.children,
+          iconBeforeText: props.iconBeforeText,
+          selected: selected || props.selected,
+          option: props.option,
+          type: props.type,
+        })}
+    </TouchableOpacity>
   );
 };
+
+Button.displayName = 'Button';
 
 Button.propTypes = {
   /**  To override default style */
@@ -126,59 +220,24 @@ Button.propTypes = {
   textStyle: PropTypes.object,
   /**  Pass button text as children as children */
   children: PropTypes.string,
-  /**  Change indicator color */
-  indicatorColor: PropTypes.string,
-  /**  To change button size */
-  size: PropTypes.oneOf(['xxsmall', 'xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge']),
-  /**  To change button width */
-  width: PropTypes.oneOf(['xxsmall', 'xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge']),
-  /**  callback function to be called when pressed */
-  onPress: PropTypes.func.isRequired,
-  /**  Pass the brand color */
-  color: PropTypes.string,
-  /**  Boolean value for round button */
-  round: PropTypes.bool,
-  /**  Boolean value for outline button */
-  outline: PropTypes.bool,
   /**  Boolean value for disabled button */
-  transparent: PropTypes.bool,
-  /**  Boolean value for transparent button */
   disabled: PropTypes.bool,
-  /**  Boolean value for loading button */
-  loading: PropTypes.bool,
-  /**  To pass custom icon (default and same as leftIcon) */
-  icon: PropTypes.element,
-  /**  To pass custom icon on left */
-  leftIcon: PropTypes.element,
-  /**  To pass custom icon on right */
-  rightIcon: PropTypes.element,
-  /**  To make button short or long */
-  length: PropTypes.oneOf(['long', 'short']),
-  /**  To enable outline button tint */
-  tint: PropTypes.bool,
+  /** The icon set to include. See the icon page for the list of sets */
+  iconSet: PropTypes.string,
+  /** The icon to include. See the icon page for the list of icons */
+  glyph: PropTypes.string,
+  /** Determines whether the icon should be placed before the text */
+  iconBeforeText: PropTypes.bool,
+  /**  Indicates the importance of the button: 'emphasized' or 'transparent' */
+  option: PropTypes.oneOf(BUTTON_OPTIONS),
+  /** Set to **true** to set state of the button to "selected" */
+  selected: PropTypes.bool,
+  /** Sets the variation of the component. Primarily used for styling: 'standard',
+  'positive',
+  'negative' */
+  type: PropTypes.oneOf(BUTTON_TYPES),
+  /**  Callback function; triggered when the button is pressed */
+  onPress: PropTypes.func,
 };
-
-Button.defaultProps = {
-  children: 'Submit',
-  size: 'medium',
-  length: 'long',
-  width: 'medium',
-  color: 'primary',
-  tint: true,
-};
-
-const styles = StyleSheet.create({
-  container: {
-    left: 0,
-    right: 0,
-    borderRadius: 2,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  iconStyle: {
-    paddingHorizontal: 5,
-  },
-});
 
 export default Button;
